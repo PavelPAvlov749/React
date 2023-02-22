@@ -1,0 +1,215 @@
+.userPageContainer {
+
+    
+}
+
+.userPageWrapper {
+    
+
+    width: 100%;
+    display: grid;
+    grid-area: userPageInfo;
+    /* margin: 0% 0.3rem 0% 0.3rem;  */
+    margin: 0 auto;
+    grid-template-columns: 1fr fr ;
+    grid-template-rows: 2fr max-content max-content;
+    grid-gap: 0.5rem;
+    grid-template-areas:
+        "Avatar info"
+        "name name "
+        "Buttons Buttons"
+    ;
+}
+
+.hr {
+    position: relative;
+    margin-top: -1rem;
+    margin-bottom: 0.3rem;
+    width: 100%;
+    height: 1px;
+    background-color: grey;
+}
+
+.info {
+
+    grid-area: info;
+   
+    display: grid;
+    height: max-content;
+    width: 100%;
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1.5fr;
+    grid-gap: 0.5rem;
+    grid-template-areas:
+        "status status status"
+        "P F FL";
+}
+
+.status {
+
+    display: grid;
+    height: max-content;
+    font-size: medium;
+    grid-area: status;
+
+}
+
+.fullName {
+    height: max-content;
+    padding: 0%;
+    font-weight: 400;
+    margin: 0% 0% 0% 0%;
+    grid-area: name;
+
+}
+
+
+.defaultAvatarSmall{
+    margin-bottom: 0%;
+    margin-left: 0.1rem;
+    color: white;
+    display: inline-block;
+    border-radius: 1px;
+    border-color: rgb(106, 6, 75);
+    border-style: solid;
+    border-radius: 180px;
+    font-size: 15px;
+    min-width: 51px;
+    min-height:51px;
+    max-width: 51px;
+    max-height: 51px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(85deg, #fb63f9, #c2e534);
+    text-align: center;
+    vertical-align: middle;
+    grid-area: Avatar;
+}
+.avatarSmall{
+    min-width: 24px;
+    min-height:24px;
+    max-width: 25px;
+    max-height: 25px;
+    width: 100%;
+    height: 100%;
+    display: inline;
+}
+
+.avatarSmall img{
+    display: inline;
+    object-fit: cover;
+    vertical-align: middle;
+    margin-bottom: 0%;
+    margin-left: 0.1rem;
+    border-radius: 180px;
+    min-width: 55px;
+    min-height:55px;
+    max-width: 55px;
+    max-height: 55px;
+    width: 100%;
+    height: 100%;
+    grid-area: Avatar;
+}
+
+
+.avatarLarge img{
+    margin-bottom: 0%;
+    margin-top:  1rem;
+    object-fit: cover;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 180px;
+    font-size: 40px;
+    min-width: 90px;
+    min-height: 90px;
+    max-width: 90px;
+    max-height: 90px;
+    width: 90%;
+    height: 90%;
+    grid-area: Avatar;
+}
+.defaultAvatarLarge {
+    margin-bottom: 0%;
+    margin-left: 0.1rem;
+    color: white;
+    border-radius: 3px;
+    border-color: rgb(106, 6, 75);
+    border-style: solid;
+    border-radius: 180px;
+    font-size: 40px;
+    min-width: 110px;
+    min-height: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(85deg, #fb63f9, #c2e534);
+    text-align: center;
+    vertical-align: middle;
+    grid-area: Avatar;
+}
+
+.input:focus {
+    border: none;
+}
+
+.defaultAvatarLarge span {
+    position: relative;
+    bottom: -20%;
+    left: 25%;
+    margin-left: -50%;
+    vertical-align: middle;
+}
+
+
+
+.publications {
+    height: max-content;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+    width: max-content;
+
+
+    grid-area: P;
+}
+
+.Follower {
+
+    text-decoration: none;
+    height: max-content;
+    text-align: center;
+    width: max-content;
+
+    font-weight: 600;
+    font-size: 13px;
+    grid-area: F;
+}
+
+.Followed {
+
+    height: max-content;
+    text-align: center;
+    width: max-content;
+
+    font-weight: 600;
+    font-size: 13px;
+    grid-area: FL;
+}
+
+.contrtolButtons {
+    width: 98%;
+    grid-area: Buttons;
+    text-align: center;
+}
+.contrtolButtons button{
+    width: 49%;
+    height: 2rem;
+    color: white;
+    border: none;
+    margin-right: 1px;
+    border-radius: 5px;
+    background-color: rgb(77, 90, 190);
+    display: inline;
+}

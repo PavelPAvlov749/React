@@ -1,0 +1,37 @@
+.chatWindowWrapper{
+    /* background-color: aqua; */
+    height: 100%;
+  
+}
+
+
+.noMessages{
+    padding-top: 35%;
+    text-align: center;
+}
+
+.mailboxIcon{
+    text-align: center;
+    width: 120px;
+    height: 120px;
+}
+.messageArea{
+    width: 100%;
+    grid-area: messages;
+    display: block;
+    overflow-y: scroll;
+    position: fixed;
+    top: 0;
+    height: 100%;
+
+
+    height: -webkit-calc(10% + 2rem);
+    height: -webkit-calc(10% + 2rem);
+    height: calc(100vh - (10% + 2rem));
+
+}
+@media(max-width : 767px){
+    .noMessage{
+        display: none;
+    }
+}
