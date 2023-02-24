@@ -11,39 +11,41 @@
     grid-area: userPageInfo;
     /* margin: 0% 0.3rem 0% 0.3rem;  */
     margin: 0 auto;
-    grid-template-columns: 1fr fr ;
-    grid-template-rows: 2fr max-content max-content;
+    grid-template-columns: 5fr 12fr;
+    grid-template-rows: 1fr 2fr 1fr;
     grid-gap: 0.5rem;
     grid-template-areas:
+        "Avatar name"
         "Avatar info"
-        "name name "
-        "Buttons Buttons"
+        "Avatar Buttons"
     ;
 }
 
 .hr {
     position: relative;
-    margin-top: -1rem;
+    /* margin-top: -1rem; */
     margin-bottom: 0.3rem;
     width: 100%;
     height: 1px;
     background-color: grey;
 }
-
+a{
+    text-decoration: none;
+}
 .info {
 
     grid-area: info;
-   
+    color: black;
     display: grid;
-    height: max-content;
+    /* height: max-content; */
     width: 100%;
-
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1.5fr;
-    grid-gap: 0.5rem;
+    grid-template-rows: 1fr 1fr;
+    /* grid-gap: 0.5rem; */
     grid-template-areas:
         "status status status"
-        "P F FL";
+        "P F FL"
+        
 }
 
 .status {
@@ -52,6 +54,8 @@
     height: max-content;
     font-size: medium;
     grid-area: status;
+    padding: 0%;
+    margin: 0%;
 
 }
 
@@ -66,6 +70,7 @@
 
 
 .defaultAvatarSmall{
+
     margin-bottom: 0%;
     margin-left: 0.1rem;
     color: white;
@@ -87,6 +92,7 @@
     grid-area: Avatar;
 }
 .avatarSmall{
+
     min-width: 24px;
     min-height:24px;
     max-width: 25px;
@@ -94,9 +100,11 @@
     width: 100%;
     height: 100%;
     display: inline;
+    padding: 10px;
 }
 
 .avatarSmall img{
+   
     display: inline;
     object-fit: cover;
     vertical-align: middle;
@@ -130,6 +138,8 @@
     grid-area: Avatar;
 }
 .defaultAvatarLarge {
+    padding: 10px;
+
     margin-bottom: 0%;
     margin-left: 0.1rem;
     color: white;
@@ -167,8 +177,8 @@
 .publications {
     height: max-content;
     text-align: center;
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 500;
+    font-size: small;
     width: max-content;
 
 
@@ -181,9 +191,9 @@
     height: max-content;
     text-align: center;
     width: max-content;
-
-    font-weight: 600;
-    font-size: 13px;
+    color: black;
+    font-weight: 500;
+    font-size: small;
     grid-area: F;
 }
 
@@ -192,24 +202,26 @@
     height: max-content;
     text-align: center;
     width: max-content;
-
-    font-weight: 600;
-    font-size: 13px;
+    color: black;
+    font-weight: 500;
+    font-size: small;
     grid-area: FL;
 }
 
 .contrtolButtons {
     width: 98%;
     grid-area: Buttons;
+    /* background-color: #c2e534; */
     text-align: center;
 }
-.contrtolButtons button{
-    width: 49%;
+.btn { 
+    width: calc(100% - 20px);
     height: 2rem;
     color: white;
     border: none;
     margin-right: 1px;
     border-radius: 5px;
     background-color: rgb(77, 90, 190);
-    display: inline;
+    /* display: inline; */
+    grid-area: Buttons;
 }

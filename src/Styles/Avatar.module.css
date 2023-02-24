@@ -31,13 +31,19 @@
     background-color: rgb(98, 98, 98);
     margin: 0%;
     padding: 0%;
+    grid-area: Avatar;
+}
+.defaultAvatarSmall{
+    max-width: 50px;
+    max-height: 50px;
+    width: 100%;
+    height: auto;
 }
 .defaultAvatarSmall span {
     position: relative;
-    /* top: 4rem; */
-    /* left: 35px; */
-    margin-left: calc(45px - 1rem);
-   vertical-align: middle;
+    left: calc(50% - 11px);
+
+    vertical-align: middle;
     color: aliceblue;
     font-size: 2rem;
     display: inline;
@@ -46,34 +52,33 @@ a{
     text-decoration: none;
 }
 .avatarLarge {
-    width: fit-content;
+    padding: 10px;
+    grid-area: Avatar;
+
 }
 .avatarLarge img{
 
-    /* min-width: 100px; */
-    /* min-height: 100px; */
-    max-width: 180px;
-    max-height: 180px;
+    max-width: 120px;
+    max-height: 120px;
     width: 100%;
-    height: 100%;
+    height: auto;
 
+    border-radius: 300px;
     grid-area: Avatar;
     display: inline;
 }
 .avatarSmall{
     display: inline;
     vertical-align: middle;
-    
+    grid-area: Avatar;
 }
 .avatarSmall img{
     object-fit:fill;
     border-radius: 360px;
-    min-width: 100px;
-    min-height: 100px;
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 70px;
+    max-height: 70px;
     width: 100%;
-    height: 100%;
+    height: auto;
 
     grid-area: Avatar;
     display: inline;

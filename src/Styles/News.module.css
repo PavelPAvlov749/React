@@ -1,19 +1,23 @@
 .news{
     padding-top: 2rem;
+    padding: 10px;
 }
 .postNewsContainer {
     /* text-align: center; */
-    border: 2px solid rgb(177, 177, 177);
+    border: 1px solid rgb(135, 135, 135);
     padding: 5px;
     margin-bottom: 2rem;
     border-radius: 5px;
 }
 .creatorInfo{
-    line-height: 5rem;
+   
+    line-height: 3rem;
     padding: 5px;
-    /* border-bottom: 1px solid grey; */
+    border-bottom: 1px solid grey;
+   
 }
 .avatarWrapper{
+
     display: inline;
 }
 .creatorInfo h1 {
@@ -22,7 +26,7 @@
     vertical-align: middle;
     margin-left: 1rem;
     color: black;
-    font-weight: 400;
+    font-weight: 300;
 }
 .postIMGContainer{
     /* width: 100%; */
@@ -39,57 +43,3 @@
     height: auto;
 }
 
-/* .postNewsContainer{
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    border: solid 1px grey;
-    border-radius: 2px;
-    padding: 3px 3px 3px 3px;
-
-    overflow-y: scroll;
-}
-.news{
-
-}
-.postIMGContainer{
-
-
-}
-.postIMG{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    max-width: 400px;
-    max-height: 400px;
-}
-.autorName{
-    margin-bottom: 0%;
-    display: inline;
-    font-weight: 400;
-    text-decoration: none;
-    color: black;
-    vertical-align: middle;
-}
-.avatarWrapper{
-
-    vertical-align: middle;
-    margin-bottom: 0%;
-    display: inline;
-
-
-}
-
-.ScrollBtn{
-    text-align: center;
-    margin-top: 1rem;
-    margin-left: 80%;
-    background-color: rgb(60, 81, 219);
-    border-radius: 180px;
-    width: 3rem;
-    height: 3rem;
-    vertical-align: middle;
-    position: fixed;
-    font-size: xx-large;
-    color: blanchedalmond;
-} */

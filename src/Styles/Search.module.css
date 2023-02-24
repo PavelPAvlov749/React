@@ -1,11 +1,18 @@
 .searchWrapper{
+    position: relative;
     width: 100%;
+    margin: 0%;
     overflow-y:scroll;
     height: 100%;
+    padding: 5px 15px 15px 15px;
+    overflow-x: hidden;
+
 }
 
 .searchResults{
-    margin-top: 1rem;
+    position: relative;
+    margin-top: 4rem;
+    overflow-y: scroll;
 }
 .userMiniPage img{
     display: inline;
@@ -18,8 +25,13 @@
 .userMiniPage{
     margin-bottom: 1rem;
 }
+.input{
+    background-color: white;
+}
 .searchWrapper input{
-    right: 1rem;
+    position: fixed;
+    max-width: 800px;
+
     width: 35%;
     height: 2rem;
     font-size: medium;
@@ -30,8 +42,9 @@
     -webkit-transition: all 0.4s ;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
+
 }
 .searchWrapper input:focus{
     outline-width: 0;
-    width: 97%;
+    width: calc(100% - 50px);
 }
