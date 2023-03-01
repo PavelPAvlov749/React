@@ -39,7 +39,7 @@ const PostNews: React.FC<{ post: PostType, currentUserId: string }> = React.memo
             <NavLink to={`/p/id=${props.post.id}`}>
                 <div className={styles.postIMGContainer}>
                     <br />
-                    <img className={styles.postIMG} src={props.post.post_img} alt="" />
+                    <img className={styles.postIMG} src={props.post.postIMG} alt="" />
                 </div>
             </NavLink>
 
@@ -78,13 +78,11 @@ export const AllPosts: React.FC = React.memo((props) => {
         return (
             <div className={styles.news}>
 
-                <span onClick={scrollToTop} className={styles.ScrollBtn}></span>
-
                 {posts.length ? posts.map((post) => {
                     return (
-                        <>
-                            <PostNews post={post} currentUserId={currentUserID as string} />
-                        </>
+                        <div className={styles.postIMGContainer}>
+                            <img src={post.postIMG} alt="" />
+                        </div>
                     )
 
                 }) : null}

@@ -1,19 +1,104 @@
-.postWrapper{
-
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 0.5fr 1fr 1fr;
-    gap: 0.3rem;
+.postWrapper {
+    /* display: block; */
+    position: relative;
+   
+    max-width: 900px;
+    /* overflow-y: scroll; */
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-template-rows: 0.5fr 1fr 4fr 1fr;
     grid-template-areas: 
-    "IMG"
-    "CreatorInfo"
-    "INFO"
-    "COM"
-    "INPUT";
+    "IMG User"
+    "IMG postInfo"
+    "IMG coments"
+    "controls coments";
+    grid-gap: 5px;
+    overflow-y: scroll;
+}
+.coments{
+    grid-area: coments;
+}
+.coments h1 {
+    text-align: center;
+    font-size: x-large;
+    margin-top: 30%;
+    color: rgb(65, 65, 65);
+}
+.postIMGContainer{
+    grid-area: IMG;
+    
+  
+}
+.controls {
+    grid-area: controls;
+   
+}
+.controls img{
+    padding: 3px;
+    width: 30px;
+    height: 30px;
+}
+.postIMG {
+    width: 100%;
+    height: auto;
+    max-width: 590px;
+    max-height: 590px;
+ 
+}
+.postInfo{
+    padding: 5px;
+    grid-area: postInfo;
+   
+}
+span{
+    font-weight: 300;
+}
+.name{
+    font-size: large;
+    font-weight: 400;
 }
 .creatorInfo{
+    padding: 5px;
+    grid-area: User;
+    border-bottom: 1px solid rgb(53, 53, 53);
+}
+.autorName{
+    
+    margin-left: 1rem;
+    display: inline;
+    font-size:large;
+    text-decoration: none;
+    /* grid-area: Name; */
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+}
+.autorAvatar{
+    width: auto;
+    height: 100%;
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 180px;
+}
+ /* .postWrapper{
+
+    display: ;
+    display: grid;
+    overflow-y: scroll;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 8fr 0.5fr 1fr;
+    gap: 0.3rem;
+    grid-template-areas: 
+    "CreatorInfo"
+    "IMG"
+    "INFO"
+    "COM"
+
+} */
+/* .creatorInfo{
     grid-area: CreatorInfo;
     padding: 5px;
     margin: 0%;
@@ -23,9 +108,9 @@
     margin-left: 0.5rem;
     width: auto;
     height: 100%;
-    max-height: 25px;
-}
-.autorName{
+    max-height: 25px; 
+}*/
+/* .autorName{
     margin-left: 1rem;
     display: inline;
     font-size:large;
@@ -146,4 +231,4 @@ a{
     width: 25px;
     height: 25px;
     display: inline;
-}
+}  */

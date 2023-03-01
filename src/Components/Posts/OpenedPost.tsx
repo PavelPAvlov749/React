@@ -19,6 +19,7 @@ import comentIcon from "../../Media/comentIcon.png"
 import { Preloader } from "../Preloader/Preloader";
 import { Firestore_instance } from "../../DAL/Firestore_config";
 import { StringFormat } from "firebase/storage";
+import { ComentType } from "../../Redux/Types";
 
 
 export const ShowedPost: React.FC = React.memo((props) => {
@@ -43,12 +44,11 @@ export const ShowedPost: React.FC = React.memo((props) => {
     let coments = Object.values(actualPost.coments)
 
     const tapLikeHandler = () => {
-        Firestore_instance.toggleLikesAtPost("fnoa3ivqyuMJnY50T4Zt",currentUserID as string)
-        if (actualPost.likes_count?.includes(currentUserID as string)) {
-            dispatch(likeToogleThunk(actualPost.id as string, currentUserID as string))
+       
+        dispatch(likeToogleThunk(actualPost.id as string, currentUserID as string))
+        if (actualPost.likesCount?.includes(currentUserID as string)) {
             dispatch(postActions.dislike(currentUserID as string))
         } else {
-            dispatch(likeToogleThunk(actualPost.id as string, currentUserID as string))
             dispatch(postActions.likeToogle(currentUserID as string))
 
         }
@@ -64,28 +64,40 @@ export const ShowedPost: React.FC = React.memo((props) => {
     if (actualPost) {
         return (
             <section className={styles.postWrapper}>
-                <NavLink to={`/profile/id:=${actualPost.creatorID}`} className={styles.creatorInfo}>
+                <div className={styles.creatorInfo}>
+                <NavLink to={`/profile/id:=${actualPost.creatorID}`} >
                     <Avatar avatarIMG={actualUserPage.avatar} fullName={actualUserPage.fullName} size="small" />
-
                     <h1 className={styles.autorName}>{actualPost?.creator}</h1>
-                
                 </NavLink>
+                </div>
+                <div className={styles.postInfo}>
+                    <span className={styles.name}>{actualPost.creator + "\t:\t"}</span>
+                    <span>{actualPost?.postText}</span>
+                </div>
                 <div className={styles.postIMGContainer}>
-                    <img className={styles.postIMG} src={actualPost.post_img} alt="" />
-                    <img src={actualPost.likes_count.includes(currentUserID as string) ? dislikeIMG : likeImg} alt="#" className={styles.likeIcon} onClick={tapLikeHandler} />
+                    <img className={styles.postIMG} src={actualPost.postIMG} alt="" />
+                </div>
+                <section className={styles.controls}>
+                <img src={actualPost.likesCount.includes(currentUserID as string) ? dislikeIMG : likeImg} alt="#" className={styles.likeIcon} onClick={tapLikeHandler} />
                     <img src={comentIcon} alt="#" className={styles.comentIcon} onClick={onComentClickHandler}></img>
                    
-                    <span className={styles.likesCount} onClick={onComentClickHandler}>{actualPost.likes_count?.length + "\t likes"}</span>
+                    <span className={styles.likesCount} onClick={onComentClickHandler}>{actualPost.likesCount?.length + "\t likes"}</span>
                     {currentUserID === actualPost.creatorID ?  <img src={crossIcon} alt="#" className={styles.deletePost} onClick={deletePostHandler}></img> : null }
-                </div>
+                </section>
 
-                <div className={styles.postInfo}>
-                    <h4>{actualPost.creator + "\t:\t"}</h4>
-                    <span>{actualPost?.post_text}</span>
-                </div>
-                {actualPost.coments.length > 0 ? <SilngleComent coment={actualPost?.coments[actualPost.coments.length - 1]} currentUserID={currentUserID as string}/> : 
+              
+                <section className={styles.coments}>
+                    {actualPost.coments.length > 0 ? actualPost.coments.map((coment : ComentType) => {
+                        return (
+                            <>
+                                {/* <SilngleComent coment={coment} currentUserID={currentUserID as string}/>                             */}
+                            </>
+                        )
+                    }) : <h1>There are no Coments</h1>}
+                </section>
+                {/* {actualPost.coments.length > 0 ? <SilngleComent coment={actualPost?.coments[actualPost.coments.length - 1]} currentUserID={currentUserID as string}/> : 
                 "There is no coments"}
-                <h2 onClick={onComentClickHandler} className={styles.showAll}>Show all Coments</h2>
+                <h2 onClick={onComentClickHandler} className={styles.showAll}>Show all Coments</h2> */}
             </section>
         )
     } else {

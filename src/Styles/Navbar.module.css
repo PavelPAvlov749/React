@@ -5,13 +5,16 @@
      text-align: center;
      vertical-align: middle;
      width: 100%;
-     max-width: 780px;
+     max-width: 880px;
      height: 2rem;
      padding: 10px;
      justify-content: center;
      align-items: center;
      background-color: rgb(255, 255, 255);
      border-bottom: 1px solid rgb(42, 42, 42);
+}
+.navbarContainer::-webkit-scrollbar {
+    display: none;
 }
 
 ul{

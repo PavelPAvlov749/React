@@ -38,7 +38,7 @@ export const UserPostsList: React.FC = React.memo((props) => {
 
                 return (
                     <div key={post.id}>
-                        <img src={post.post_img} className={styles.postPreview} alt="" onClick={() => {
+                        <img src={post.postIMG} className={styles.postPreview} alt="" onClick={() => {
                             navigateToPost(post)
                         }} />
                     </div>

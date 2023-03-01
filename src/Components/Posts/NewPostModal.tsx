@@ -94,11 +94,13 @@ export const NewPostModalWindow: React.FC = React.memo((props) => {
         //     creatorID: currendUser.userID as string,
         //     creatorAvatar: currendUser.avatar as string
         // }
+        dispatch(createNewPostThunk(currendUser.userID as string, values.file, values.post_text,
+             values.post_tag, currendUser.fullName as string, currendUser.userID as string))
         // dispatch(createNewPostThunk(currendUser.userID as string, values.file, values.post_text,
         //     values.post_tag, currendUser.fullName as string, currendUser.userID as string))
         // dispatch(postActions.setIsOnnewPost(false))
         // FSAPI.addPost(currendUser.userID as string,values.post_text,values.post_img)
-        Firestore_instance.addPost(currendUser.fullName as string,currendUser.userID as string,values.post_text,values.post_img)
+        // Firestore_instance.addPost(currendUser.fullName as string,currendUser.userID as string,values.post_text,values.file)
         navigate(`/profile/id=${currendUser.userID}`)
     }
     const NextStepHandler = () => {
@@ -134,7 +136,7 @@ export const NewPostModalWindow: React.FC = React.memo((props) => {
                             </label>
                             <br />
                             <input type="file" id="file_input" style={{ "display": "none" }} accept="image/*" onChange={inputOnChangeHandler} ></input>
-                            <h2  onClick={NextStepHandler}  className={newPostIMG ? styles.showNext : styles.disableNext}>{"Next\t" + ">>"}</h2>
+                            <button onClick={NextStepHandler}  disabled={!newPostIMG} className={styles.Next}>{"Next\t" + ">>"}</button>
                         </div> : 
                         
                         // STEP 2
@@ -150,10 +152,10 @@ export const NewPostModalWindow: React.FC = React.memo((props) => {
                         </div>}
                     </Form>
                 </Formik>
-
+                <button className={styles.cancelNewPost} onClick={onCloseHandler}>Cancel</button>
             </div>
 
-            <button className={styles.cancelNewPost} onClick={onCloseHandler}>Cancel</button>
+        
         </section >
     )
 })

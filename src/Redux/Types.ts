@@ -38,15 +38,15 @@ export type ComentType = {
 }
 
 export type PostType = {
-    post_text : string,
-    post_img : string,
+    postText : string,
+    postIMG : string,
     file? : Blob | Uint8Array | ArrayBuffer,
     id? : string,
-    likes_count : Array<string>,
+    likesCount : Array<string>,
     creator : string,
     createdAt? : typeof  Date,
-    coments : Array<ComentType>,
     creatorID : string,
+    coments : Array<ComentType>,
     creatorAvatar : string
 }
 export type ChatType = {

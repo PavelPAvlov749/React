@@ -1,6 +1,7 @@
 import { disableNetwork } from "firebase/firestore"
 import { act } from "react-dom/test-utils"
 import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript"
+import { Firestore_instance } from "../DAL/Firestore_config"
 import { postAPI } from "../DAL/PostApi"
 import { app_actions } from "./AppReducer"
 import { InferActionType } from "./Store"
@@ -29,12 +30,12 @@ type initial_state_type = {
 }
 
 export let initial_state = {
-    posts : [] as unknown as Array<PostType>,
-    newPost : null as unknown as PostType,
-    currentPost : null as unknown as PostType,
-    isOnNewPost : false,
-    newPostPhoto : null as unknown as string,
-    newPostText : "",
+    posts: [] as unknown as Array<PostType>,
+    newPost: null as unknown as PostType,
+    currentPost: null as unknown as PostType,
+    isOnNewPost: false,
+    newPostPhoto: null as unknown as string,
+    newPostText: "",
 }
 
 
@@ -43,68 +44,68 @@ export const PostsReducer = (state = initial_state, action: ActionType) => {
         case GET_POSTS: {
             return {
                 ...state,
-                posts : action.payload
+                posts: action.payload
             }
         }
-        case CREATE_POST : {
+        case CREATE_POST: {
             return {
                 ...state,
-                posts : {...state.posts.concat(action.payload)}
+                posts: { ...state.posts.concat(action.payload) }
             }
         }
-        case SET_SHOWED_POST  : {
+        case SET_SHOWED_POST: {
             return {
                 ...state,
-                currentPost : action.payload
+                currentPost: action.payload
             }
         }
-        case LIKE : {
+        case LIKE: {
             return {
                 ...state,
-                currentPost : {...state.currentPost,likes_count : state.currentPost.likes_count.concat(action.payload)}
-                
-                }
-                    
-            
+                currentPost: { ...state.currentPost, likes_count: state.currentPost.likesCount.concat(action.payload) }
+
+            }
+
+
         }
-        case DISLIKE : {
+        case DISLIKE: {
             return {
                 ...state,
-                currentPost : {...state.currentPost,likes_count : state.currentPost.likes_count.filter(el => el !== action.payload)}
+                currentPost: { ...state.currentPost, likes_count: state.currentPost.likesCount.filter(el => el !== action.payload) }
             }
         }
-        case SET_ON_NEW_POST : {
+        case SET_ON_NEW_POST: {
             return {
                 ...state,
-                isOnNewPost : action.payload
+                isOnNewPost: action.payload
             }
         }
-        case SET_NEW_POST_PHOTO : {
+        case SET_NEW_POST_PHOTO: {
             return {
                 ...state,
-                newPostPhoto : action.payload
+                newPostPhoto: action.payload
             }
         }
-        case SET_NEW_POST_TEXT : {
+        case SET_NEW_POST_TEXT: {
             return {
                 ...state,
-                newPostText : state.newPostText.concat(action.payload)
+                newPostText: state.newPostText.concat(action.payload)
             }
         }
-        case ADD_COMENT : {
+        case ADD_COMENT: {
             return {
                 ...state,
-                currentPost : {...state.currentPost,coments : state.currentPost.coments.concat(action.payload.coment)}
-     
+                currentPost: { ...state.currentPost, coments: state.currentPost.coments.concat(action.payload.coment) }
+
             }
         }
-        case DELETE_COMENT : {
+        case DELETE_COMENT: {
             return {
                 ...state,
-                currentPost : {...state.currentPost,coments : state.currentPost.coments.filter(el => el.comentID !== action.payload)}
+                currentPost: { ...state.currentPost, coments: state.currentPost.coments.filter(el => el.comentID !== action.payload) }
             }
         }
-        
+
         default:
             return state
     }
@@ -118,24 +119,24 @@ export const postActions = {
     set_showed_post: (_post: PostType) => ({
         type: "messenger/posts_reducer/set_showed_post",
         payload: {
-            post_text : _post.post_text,
-            post_img : _post.post_img,
-            id : _post.id,
-            likes_count : Object.hasOwn(_post,"likes_count") ?  Object.values(_post.likes_count) : [] as Array<string>,
-            creator : _post.creator,
-            createdAt : _post.createdAt,
-            coments : Object.hasOwn(_post,"coments") ? Object.values(_post.coments) : [] as Array<ComentType>,
-            creatorID : _post.creatorID,
-            creatorAvatar : _post.creatorAvatar
+            postText: _post.postText,
+            postIMG: _post.postIMG,
+            id: _post.id,
+            likesCount: Object.hasOwn(_post, "likes_count") ? Object.values(_post.likesCount) : [] as Array<string>,
+            creator: _post.creator,
+            createdAt: _post.createdAt,
+            coments: Object.hasOwn(_post, "coments") ? Object.values(_post.coments) : [] as Array<ComentType>,
+            creatorID: _post.creatorID,
+            creatorAvatar: _post.creatorAvatar
         }
     } as const),
     setIsPostFetch: (isFetch: boolean) => ({
         type: "messenger/posts_reducer/isPostFetch",
         payload: isFetch
     } as const),
-    addComent: (postID : string, coment: ComentType) => ({
+    addComent: (postID: string, coment: ComentType) => ({
         type: "messenger/posts_reducer/addComent",
-        payload: {coment : coment,postID : postID}
+        payload: { coment: coment, postID: postID }
     } as const),
     deleteComent: (comentID: string) => ({
         type: "messenger/psts_reducer/deleteComent",
@@ -149,133 +150,130 @@ export const postActions = {
         type: "messenger/posts_reducer/like",
         payload: userID
     } as const),
-    dislike : (userID: string) => ({
+    dislike: (userID: string) => ({
         type: "messenger/posts_reducer/dislike",
         payload: userID
     } as const),
-    setIsOnnewPost : (isNewPost : boolean) => ({
-        type : "insta-clone/postReducer/setIsOnNewPost",
-        payload : isNewPost
-    }as const),
-    setNewPostPhoto : (img : any) => ({
-        type : "insta-clone/postReducer/setNewPostPhoto",
-        payload : img
-    } as const  ),
-    setNewPosttext : (postText : string) => ({
-        type : "insta-clone/postReducer/setNewPostText",
-        payload : postText
-    } as const ),
-    createPost : (post : PostType) => ({
-        type : "insta-clone/postReducer/createPost",
-        payload : post
-    } as const )
+    setIsOnnewPost: (isNewPost: boolean) => ({
+        type: "insta-clone/postReducer/setIsOnNewPost",
+        payload: isNewPost
+    } as const),
+    setNewPostPhoto: (img: any) => ({
+        type: "insta-clone/postReducer/setNewPostPhoto",
+        payload: img
+    } as const),
+    setNewPosttext: (postText: string) => ({
+        type: "insta-clone/postReducer/setNewPostText",
+        payload: postText
+    } as const),
+    createPost: (post: PostType) => ({
+        type: "insta-clone/postReducer/createPost",
+        payload: post
+    } as const)
 }
 
-export const getPostListByUserID = (userID:string) => {
-    return async function (dispatch : any) {
+export const getPostListByUserID = (userID: string) => {
+    return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
-        const posts = await (await postAPI.getListOfPosts(userID))
-        if(posts.val()) {
-            dispatch(postActions.getPosts(Object.values(posts.val())))
-            dispatch(app_actions.set_is_fetch_fasle())
-        }else{
-            dispatch(postActions.getPosts([] as Array<PostType>))
-            dispatch(app_actions.set_is_fetch_fasle())
-        }
+        const posts = await Firestore_instance.getPostsByUserID(userID)
+        console.log(posts)
+
+        dispatch(postActions.getPosts(Object.values(posts)))
+        dispatch(app_actions.set_is_fetch_fasle())
+
 
     }
 }
-export const leaveComentThunk = (userID : string,postID:string,coment : ComentType) => {
-    return async function (dispatch : any) {
-        try{
+export const leaveComentThunk = (userID: string, postID: string, coment: ComentType) => {
+    return async function (dispatch: any) {
+        try {
             dispatch(app_actions.set_is_fetch_true())
-            const newComent = await postAPI.addComentToPost(userID,postID,coment.coment_text as string,coment.comentatorName as string,coment.avatar as string)
-            if(newComent){
-                dispatch(postActions.addComent(postID,newComent))
+            const newComent = await postAPI.addComentToPost(userID, postID, coment.coment_text as string, coment.comentatorName as string, coment.avatar as string)
+            if (newComent) {
+                dispatch(postActions.addComent(postID, newComent))
                 dispatch(app_actions.set_is_fetch_fasle())
             }
 
-        }catch(ex){
+        } catch (ex) {
             console.error(ex)
         }
-    } 
+    }
 }
-export const getSinglePostByID = (postID : string) => {
+export const getSinglePostByID = (postID: string) => {
     return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
         let post = await postAPI.getPostByID(postID)
         dispatch(postActions.set_showed_post(post))
-     
+
         dispatch(app_actions.set_is_fetch_fasle())
     }
 }
-export const createNewPostThunk = (userID:string,postIMG : Blob | Uint8Array | ArrayBuffer,postText : string,postTags : string,userFullNAme : string,
-    creatorID : string) => {
-    return async function (dispatch : any) {
-        try{
+export const createNewPostThunk = (userID: string, postIMG: Blob | Uint8Array | ArrayBuffer, postText: string, postTags: string, userFullNAme: string,
+    creatorID: string) => {
+    return async function (dispatch: any) {
+        try {
             dispatch(app_actions.set_is_fetch_true())
-            if(postIMG !== null && postIMG !== undefined){
-                
+            if (postIMG !== null && postIMG !== undefined) {
+
                 dispatch(app_actions.setOnLoad(true))
-                const newPostKey = await postAPI.createPost(userID,postIMG,postText,postTags,userFullNAme,creatorID)
-                console.log(typeof(newPostKey))
-                if(newPostKey){
+                const newPostKey = await Firestore_instance.addPost(userFullNAme as string,userID,postText,postIMG)
+                if (newPostKey) {
                     dispatch(app_actions.set_is_fetch_fasle())
                     dispatch(app_actions.setOnLoad(false))
                 }
 
-            }else{
+            } else {
                 throw new Error("Post image is null.Cant upload the post")
             }
 
-        }catch(ex){
+        } catch (ex) {
             console.log(ex)
         }
 
-        
+
     }
 }
-export const deletePostThunk = (userID:string,postID:string) => {
-    return async function (dispatch : any) {
+export const deletePostThunk = (userID: string, postID: string) => {
+    return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
-        await postAPI.deletePost(userID,postID)
+        await Firestore_instance.deletePostByID(postID)
         const posts = await postAPI.getListOfPosts(userID)
-        if(posts) {
+        if (posts) {
             dispatch(postActions.getPosts(Object.values(posts.val())))
         }
-        
+
         dispatch(app_actions.set_is_fetch_fasle())
     }
 }
-export const deleteComentThunk = (postID:string,comentID:string) =>{
-    return async function (dispatch : any) {
+export const deleteComentThunk = (postID: string, comentID: string) => {
+    return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true)
-        await postAPI.deleteComent(postID,comentID)
+        await postAPI.deleteComent(postID, comentID)
         dispatch(postActions.deleteComent(comentID))
         dispatch(app_actions.set_is_fetch_fasle())
     }
 }
-export const likeToogleThunk = (postID:string,currentUserID : string) => {
-    return async function (dispatch : any) {
+export const likeToogleThunk = (postID: string, currentUserID: string) => {
+    return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
-        try{
-            await postAPI.addLikeToPost(currentUserID,postID)
+        try {
+            await Firestore_instance.toggleLikesAtPost(postID,currentUserID as string)
             dispatch(app_actions.set_is_fetch_fasle())
-        }catch(ex){
+        } catch (ex) {
             console.error(ex)
         }
-      
+
     }
 }
 
 export const getAllPosts = () => {
-    return async function (dispatch : any){
+    return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
         const posts = await postAPI.getAllPost()
-        if(posts) {
+        if (posts) {
             dispatch(postActions.getPosts(posts as Array<PostType>))
             dispatch(app_actions.set_is_fetch_fasle())
         }
-        
+
     }
 }

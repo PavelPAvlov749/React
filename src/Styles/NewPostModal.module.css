@@ -1,18 +1,25 @@
 .newPostContainer{
 
     text-align: center;
-    overflow-y: scroll;
+    width: 100%;
+    max-width: 900px;
+    align-items: center;
+    justify-content: center;
+  
 }
 
 .newPostModal {
-    background-color: red;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    border: 1px solid rgb(65, 64, 64);
+    border-radius: 5px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    width: 70%;
     height: max-content;
+    margin: 0% auto;
     min-height: 300px;
     text-align: center;
+    padding: 10px;
 
 }
 
@@ -118,7 +125,7 @@
     display: inline;
     border: none;
     height: 2rem;
-    width: 70%;
+    width: 50%;
     border-radius: 5px;
     color: white;
     background-color: rgb(31, 62, 147);
@@ -126,4 +133,68 @@
 .cancelNewPost:active{
     background-color: rgb(16, 31, 72);
     height: 2rem + 2px;
+}
+
+@media(max-width : 550px){
+    .newPostContainer{
+        height: calc(100% - 2rem);
+    }
+    .Next{
+        position: fixed;
+        bottom: calc(2rem + 2rem + 10px);
+        left: 4%;
+        margin-top: 1rem;
+        display: inline;
+        border: none;
+        height: 2rem;
+        width: 90%;
+        border-radius: 5px;
+        color: white;
+        background-color: rgb(31, 62, 147);
+        overflow-x: hidden;
+    }
+    .newPostModal{
+        width: 100%;
+        padding: 0px;
+        border: none;
+        text-align: center;
+        overflow-x: hidden;
+        transform: translateX(+100%);
+        animation: transform 0.7s forwards;
+        height: 100%;
+
+    }
+    @keyframes transform {
+        0%{
+            transform: translateX(+100%);
+
+        }
+        100%{
+            transform: translateX(0%);
+        }
+    }
+    .cancelNewPost{
+        position: fixed;
+        bottom: 2rem;
+        left: 4%;
+        margin-top: 1rem;
+        display: inline;
+        border: none;
+        height: 2rem;
+        width: 90%;
+        border-radius: 5px;
+        color: white;
+        background-color: rgb(31, 62, 147);
+        overflow-x: hidden;
+    }
+    .newPostIMG{
+        object-fit: cover;
+        margin: 0%;
+        padding: 0%;
+        display: inline-block;
+        max-height: 400px;
+        position: relative;
+        overflow-x: hidden;
+        width: 100%;
+    }
 }
