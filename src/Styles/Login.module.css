@@ -1,13 +1,12 @@
 .formDivContainer{
     position: relative;
     top: 3rem;
-    
     width: 100%;
     text-align: center;
     justify-content: center;
     align-items: center;
     margin-bottom: 0;
-    width: 100%;
+    width: calc(100% - 10px);
     border-radius: 5px;
     height: 350px;
     border-color: grey;

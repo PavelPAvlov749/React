@@ -9,6 +9,8 @@ import { Global_state_type } from "../../Redux/Store";
 import { ComentType, PostType } from "../../Redux/Types";
 import { app_actions } from "../../Redux/AppReducer";
 import { useNavigate } from "react-router-dom";
+import { FSAPI } from "../../DAL/FirestoreAPI";
+import { Firestore_instance } from "../../DAL/Firestore_config";
 
 type PostFormType = {
     post_text: string,
@@ -83,18 +85,20 @@ export const NewPostModalWindow: React.FC = React.memo((props) => {
     //SUNBIMT HANDLER 
     const formSubmit = (values: PostFormType) => {
         //  dispatch(postActions.setNewPosttext(values.post_text))
-        const newPost: PostType = {
-            post_img: newPostIMG,
-            post_text: newPostText,
-            creator: currendUser.fullName as string,
-            likes_count: [] as Array<string>,
-            coments: [] as Array<ComentType>,
-            creatorID: currendUser.userID as string,
-            creatorAvatar: currendUser.avatar as string
-        }
-        dispatch(createNewPostThunk(currendUser.userID as string, values.file, values.post_text,
-            values.post_tag, currendUser.fullName as string, currendUser.userID as string))
-        dispatch(postActions.setIsOnnewPost(false))
+        // const newPost: PostType = {
+        //     post_img: newPostIMG,
+        //     post_text: newPostText,
+        //     creator: currendUser.fullName as string,
+        //     likes_count: [] as Array<string>,
+        //     coments: [] as Array<ComentType>,
+        //     creatorID: currendUser.userID as string,
+        //     creatorAvatar: currendUser.avatar as string
+        // }
+        // dispatch(createNewPostThunk(currendUser.userID as string, values.file, values.post_text,
+        //     values.post_tag, currendUser.fullName as string, currendUser.userID as string))
+        // dispatch(postActions.setIsOnnewPost(false))
+        // FSAPI.addPost(currendUser.userID as string,values.post_text,values.post_img)
+        Firestore_instance.addPost(currendUser.fullName as string,currendUser.userID as string,values.post_text,values.post_img)
         navigate(`/profile/id=${currendUser.userID}`)
     }
     const NextStepHandler = () => {

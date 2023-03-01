@@ -1,10 +1,11 @@
 .newPostContainer{
 
     text-align: center;
+    overflow-y: scroll;
 }
 
 .newPostModal {
-
+    background-color: red;
     position: relative;
     display: flex;
     flex-direction: column;

@@ -7,6 +7,8 @@ import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { ComentType } from "../Redux/Types";
 
 
+
+
 //Abstarct API class 
 export class abstractAPI {
     protected RealtimeDataBase = dataBase
@@ -36,6 +38,14 @@ export class abstractAPI {
 
 }
 
+class FirestorePostAPI extends abstractAPI {
+    constructor () {
+        super()
+    }
+    async getPosts (userID : string) {
+
+    }
+}
 
 class PostAPI extends abstractAPI {
     constructor() {
@@ -61,6 +71,7 @@ class PostAPI extends abstractAPI {
     async getAllPost () {
         const result = await (await get(child(this.DatabaseRef, "Posts/"))).val()
         const post = Object.values(result)
+        console.log(post)
         return post
 
     }

@@ -7,11 +7,17 @@ import styles from "../../Styles/News.module.css"
 import { PostType } from "../../Redux/Types";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "../UserPage/Avatar";
+import { posix } from "node:path/win32";
+import { postAPI } from "../../DAL/PostApi";
+import { Firestore_instance } from "../../DAL/Firestore_config";
 
 
 const PostNews: React.FC<{ post: PostType, currentUserId: string }> = React.memo((props) => {
     const dispatch = useDispatch()
-
+    useEffect(() => {
+        // postAPI.getAllPost()
+        Firestore_instance.getAllPosts()
+    },[])
     const tapLikeHandler = function () {
 
     }
@@ -56,7 +62,7 @@ export const AllPosts: React.FC = React.memo((props) => {
     }, [isFetch])
 
     useEffect(() => {
-        dispatch(getAllPosts())
+        // dispatch(getAllPosts())
     }, [])
 
     const posts = useSelector((state: Global_state_type) => {

@@ -51,8 +51,9 @@ const App: React.FC<AppPropsType> = React.memo((props: AppPropsType) => {
       <div className={styles.app}>
           <HashRouter >
           {onMessage ? <audio src={sound} autoPlay={true}></audio> : null}
+          <Navbar />
             <Router actualUser={props.currentUserID as string} isAuth={props.isAuth} />
-            <Navbar />
+        
           </HashRouter  >
 
       </div>

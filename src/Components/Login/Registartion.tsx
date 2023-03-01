@@ -73,7 +73,7 @@ export const Registration: React.FC = React.memo((props) => {
             {onError ? <span>{onError.errorMessage}</span> : null}
             <Formik
                 enableReinitialize={true} //<= If true Form will reinitialize after reciving new initial value from state 
-                className="login_forms"
+              
                 //FORM INITIAL VALUES
                 initialValues={{
                     avatar : newUserRegForm.avatar,

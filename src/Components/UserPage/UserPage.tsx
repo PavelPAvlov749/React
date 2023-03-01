@@ -7,6 +7,9 @@ import { UserPostsList } from "../Posts/UsersPostsList";
 import { UserStatus } from "../UserStatus/Status";
 import styles from "../../Styles/UserPage.module.css"
 import { Avatar } from "./Avatar";
+import { Firestore_instance } from "../../DAL/Firestore_config";
+import pic from "../../Media/imageGallery.png"
+import saved from "../../Media/saved.png"
 
 
 
@@ -22,6 +25,7 @@ export const UserPage: React.FC = React.memo(() => {
     const dispatch: any = useDispatch()
     useEffect(() => {
         dispatch(getUserPageByID(userPageUrl))
+        Firestore_instance.getPostsByUserID(userPageUrl)
     }, [userPageUrl])
 
     const currentUserID = useSelector((state: Global_state_type) => {
@@ -47,11 +51,7 @@ export const UserPage: React.FC = React.memo(() => {
         }
     }
 
-    // //Send message Handler
-    // const sendMessage = () => {
-
-    //     navigate(`/chat/id:=${actualUserPage.userID}`)
-    // }
+ 
     return (
         <div className={styles.userPageContainr}>
             <section className={styles.userPageWrapper} >
@@ -87,13 +87,18 @@ export const UserPage: React.FC = React.memo(() => {
 
                 </div>
                 {userPageUrl !== currentUserID ? <button className={styles.btn} onClick={followToogle}>{Object.values(actualUserPage.followers as Array<string>).includes(currentUserID) ? "Unfollow" : "Follow"}</button> : null}
-                {/* {userPageUrl !== currentUserID ?
-                    <section className={styles.contrtolButtons}>
-                    
-                        {userPageUrl !== currentUserID ? <button onClick={sendMessage}>Send message</button> : null}
-                    </section> : null
-                } */}
+         
 
+            </section>
+            <section className={styles.SELECTOR}>
+                <ul>
+                    <li>
+                        <img src={pic} alt="" />
+                    </li>
+                    <li>
+                        <img src={saved} alt="" />
+                    </li>
+                </ul>
             </section>
             <UserPostsList />
         </div>

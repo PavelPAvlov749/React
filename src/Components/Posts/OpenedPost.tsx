@@ -7,7 +7,7 @@ import { deletePostThunk, getSinglePostByID, likeToogleThunk, postActions } from
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 //COMPONENTS
 import { PostComents, SilngleComent } from "./Coments";
-import { ComentTextArea } from "./ComentTextArea";
+
 //STYLES IMPORT
 import styles from "../../Styles/OpenPost.module.css"
 //MEDIA IMPORTS
@@ -17,6 +17,8 @@ import { Avatar } from "../UserPage/Avatar";
 import crossIcon from "../../Media/trash_64.png"
 import comentIcon from "../../Media/comentIcon.png"
 import { Preloader } from "../Preloader/Preloader";
+import { Firestore_instance } from "../../DAL/Firestore_config";
+import { StringFormat } from "firebase/storage";
 
 
 export const ShowedPost: React.FC = React.memo((props) => {
@@ -28,6 +30,8 @@ export const ShowedPost: React.FC = React.memo((props) => {
     let location = useLocation().pathname.split("=")[1]
     useEffect(() => {
         dispatch(getSinglePostByID(location))
+        Firestore_instance.getPostSinglePostByPostID("VIXtmwcLqlQgoOZf2zJf")
+        Firestore_instance.getComents("fnoa3ivqyuMJnY50T4Zt")
     }, [])
     const actualUserPage = useSelector((state: Global_state_type) => {
         return state.userPage
@@ -39,6 +43,7 @@ export const ShowedPost: React.FC = React.memo((props) => {
     let coments = Object.values(actualPost.coments)
 
     const tapLikeHandler = () => {
+        Firestore_instance.toggleLikesAtPost("fnoa3ivqyuMJnY50T4Zt",currentUserID as string)
         if (actualPost.likes_count?.includes(currentUserID as string)) {
             dispatch(likeToogleThunk(actualPost.id as string, currentUserID as string))
             dispatch(postActions.dislike(currentUserID as string))

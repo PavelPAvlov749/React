@@ -2,6 +2,7 @@ import { Field, Form, Formik, FormikHandlers } from "formik";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { Firestore_instance } from "../../DAL/Firestore_config";
 import { leaveComentThunk } from "../../Redux/PostReducer";
 import { Global_state_type } from "../../Redux/Store";
 import styles from "../../Styles/Coments.module.css"
@@ -28,12 +29,13 @@ export const ComentTextArea : React.FC = React.memo((props) => {
 
     }
     const onSubmitHandler = ( values : {coment : string}) => {
-        dispatch(leaveComentThunk(currentUser.userID as string,postURL,
-            {comentatorName : currentUser.fullName,
-            avatar : currentUser.avatar,
-            comentatorID : currentUser.userID,
-            coment_text : values.coment
-        }))
+        Firestore_instance.addComentToPost("fnoa3ivqyuMJnY50T4Zt",currentUser.fullName as string, currentUser.userID as string,values.coment)
+        // dispatch(leaveComentThunk(currentUser.userID as string,postURL,
+        //     {comentatorName : currentUser.fullName,
+        //     avatar : currentUser.avatar,
+        //     comentatorID : currentUser.userID,
+        //     coment_text : values.coment
+        // }))
         
     }
     const showComents = () => {

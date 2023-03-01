@@ -1,11 +1,12 @@
-import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore, query, addDoc } from "firebase/firestore";
-import { getDatabase, ref, onValue, set, get, child } from "firebase/database";
-import { firebase } from "./FirebaseConfig";
-import { firebaseConfig } from "./FirebaseConfig";
-import { useDispatch } from "react-redux";
-import { async } from "@firebase/util";
+
+import { collection, getDocs, getFirestore, query, addDoc, where, 
+        QuerySnapshot, Timestamp, doc, getDoc, setDoc,documentId,
+        updateDoc,arrayUnion,arrayRemove,deleteDoc} 
+        from "firebase/firestore";
+import { getDatabase, ref, onValue, set, get, child, serverTimestamp, update } from "firebase/database";
+
 import { Firestore } from "./FirebaseConfig";
+
 
 
 
@@ -14,59 +15,150 @@ import { Firestore } from "./FirebaseConfig";
 //Initialize Real-time data base instance 
 const dataBase = getDatabase();
 
-export const writeUserData = async function () {
-    const refrence = await ref(dataBase);
-    onValue(refrence, (snap) => {
-        const data = snap.val();
-    })
-}
 //APPLICATION FIRESTORE INSTANSE
 const reference = ref(dataBase)
+
 export const Firestore_instance = {
-    Get_collection: async()=>{
-        let data;
-        onValue(reference, (_snap) => {
-            const data = _snap.val()
-            return data
-        })
-    },
-    Get_collection_once: async () => {
-        const q = query(collection(Firestore, "chat_firestore"));
-        const query_snapshot = await getDocs(q).then((data) => data)
-        let data: any = []
-        query_snapshot.forEach((doc) => {
-            data.push(doc.data())
-        })
+    
 
-        return data
+   
+    getAllPosts: async () => {
+        try {
+            const docRef = collection(Firestore,"Posts")
+            const posts : any = []
+            const docs = await getDocs(docRef)
+            if(!docs.empty){
+                await docs.forEach((doc) => {
+                    posts.push(doc.data())
+                })
+            }else{
+                throw new Error("Cant load posts")
+            }
+            console.log(posts)
+            return posts
+        } catch (ex) {
+            console.log(ex)
+        }
     },
-    get_posts: async () => {
-        const q = query(collection(Firestore, "posts"));
-        const query_snapshot = await getDocs(q).then((data) => data);
-        let posts: any = [];
-        query_snapshot.forEach((doc) => {
-            posts.push({...doc.data(),id: doc.id})
-        })
-        return posts
+    getPostSinglePostByPostID : async (postID : string) => {
+        try{
+            const docRef = doc(Firestore,"Posts/" + postID)
+            const post = await getDoc(docRef)
+            console.log(post.data())
+            return post.data()
+        }catch(ex){
+            console.log(ex)
+        }
     },
-    add_post: async (text: string, img: string) => {
-        const q = query(collection(Firestore, "posts"));
-        await addDoc(collection(Firestore, "posts"), {
-            post_img : img,
-            post_likes_count : 0,
-            post_text : text,
-            userName : "Pavel Pavlov",
-            user_id : "none"
+    getPostsByUserID: async (userID: string) => {
+        try{
+            const q = query(collection(Firestore, "Posts"), where("creatorID", "==", userID));
 
-        })
+            let posts: any = [];
+            const querySnap = await getDocs(q)
+            querySnap.forEach((doc) => {
+                posts.push(doc.data())
+    
+            })
+            console.log(posts)
+            return posts
+        }catch(ex){
+            console.log(ex)
+        }
+
     },
-    send_message : async (_text:string | undefined,user_id:string | undefined | null,_sender:string | undefined|null) => {
-        const q = query(collection(Firestore,"chat_firestore"));
-        const docRef = await addDoc(collection(Firestore,"chat_firestore"),{
-            message_text : _text,
-            user_id : user_id,
-            created_at : new Date().getUTCDate(),
-            sender : _sender
-        })
+    addPost: async (userName : string,userID : string,text: string, img: string) => {
+        try{    
+            const docRef = await collection(Firestore, "Posts")
+            const docID = await doc(docRef)
+            await setDoc(docID, {
+                postIMG: img,
+                likesCount: 0,
+                postText: text,
+                creatorName: userName,
+                creatorID: userID,
+                createdAt : serverTimestamp(),
+                id : docID.id
+                
+            })
+        }catch(ex){
+            console.log(ex)
+        }
+      
+    },
+    toggleLikesAtPost : async (postID : string,userID : string) => {
+        try{
+            const docRef = doc(Firestore,"Posts/" + postID)
+            const snap = await getDoc(docRef)
+       
+            if(snap.exists()){
+                console.log(snap.data())
+                const post  =  await snap.data()
+             
+                if(snap.data().likesCount.includes(userID)){
+                    updateDoc(docRef,{likesCount : arrayRemove(userID)})
+                }else{
+                    updateDoc(docRef,{likesCount : arrayUnion(userID)})
+                }
+            }else{
+                console.log("Post does not exist")
+            }
+        }catch(ex){ 
+            console.log(ex)
+        }
+    },
+    deletePostByID : async (postID : string) => {
+        try{
+            const docRef = doc(Firestore,"Posts/" + postID)
+            deleteDoc(docRef)
+        }catch(ex){
+            console.log(ex)
+        }
+    },
+    addComentToPost : async (postID : string,comentatorName : string,comentatorID : string,commentText : string) => {
+        try{
+            const docRef = collection(Firestore,"Coments/")
+            const comentID = doc(docRef)
+            const newComent = {
+                comentatorName : comentatorName,
+                comentatorID : comentatorID,
+                commentText : commentText,
+                createdAt : serverTimestamp(),
+                comentID : comentID.id,
+                postID : postID
+            }
+            setDoc(comentID,newComent)
+
+        }catch(ex){
+            console.log(ex)
+        }
+    },
+    deleteComentByID : async (comentID : string) => {
+        try{
+            const docRef = doc(Firestore,"Coments/" + comentID)
+            await deleteDoc(docRef)
+
+        }catch(ex){
+            console.log(ex)
+        }
+    },
+    getComents : async (postID : string) => {
+        try{
+            const docRef = collection(Firestore,"Coments")
+            const q = await query(docRef,where("postID","==",postID))
+            const coments : any = []
+            const snap = await getDocs(q)
+            if(!snap.empty){
+               await snap.forEach((doc) => {
+                    coments.push(doc.data())
+                })
+            }else{
+                console.log("Empty")
+            }
+            console.log(coments)
+            return coments
+        }catch(ex){
+            console.log(ex )
+        }
     }
 }
