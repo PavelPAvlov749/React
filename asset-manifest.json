@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/it-kamasitra/static/css/main.7f939c10.css",
+    "main.js": "/it-kamasitra/static/js/main.318d29ae.js",
+    "static/js/787.731f0dd6.chunk.js": "/it-kamasitra/static/js/787.731f0dd6.chunk.js",
+    "static/media/google_button.png": "/it-kamasitra/static/media/google_button.ba94402307dab3d9e2f0.png",
+    "static/media/6.gif": "/it-kamasitra/static/media/6.865b752f64bfb5e2345f.gif",
+    "static/media/message.png": "/it-kamasitra/static/media/message.4eeb592f1be2adb280b5.png",
+    "static/media/emoji.png": "/it-kamasitra/static/media/emoji.780467997739d41d3736.png",
+    "static/media/MessageTone.mp3": "/it-kamasitra/static/media/MessageTone.71875f38f16101cf915c.mp3",
+    "static/media/imageGallery.png": "/it-kamasitra/static/media/imageGallery.6efc1d3040f2b00bf278.png",
+    "static/media/search.png": "/it-kamasitra/static/media/search.bbf2dec15d518049563b.png",
+    "index.html": "/it-kamasitra/index.html",
+    "main.7f939c10.css.map": "/it-kamasitra/static/css/main.7f939c10.css.map",
+    "main.318d29ae.js.map": "/it-kamasitra/static/js/main.318d29ae.js.map",
+    "787.731f0dd6.chunk.js.map": "/it-kamasitra/static/js/787.731f0dd6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7f939c10.css",
+    "static/js/main.318d29ae.js"
+  ]
+}
