@@ -34,7 +34,8 @@ export type ComentType = {
     comentatorID : string | null,
     avatar : string | null,
     comentID? : string ,
-    createdAt? : string 
+    createdAt? : string,
+    postID? : string
 }
 
 export type PostType = {
@@ -44,7 +45,7 @@ export type PostType = {
     id? : string,
     likesCount : Array<string>,
     creator : string,
-    createdAt? : typeof  Date,
+    createdAt? : string,
     creatorID : string,
     coments : Array<ComentType>,
     creatorAvatar : string

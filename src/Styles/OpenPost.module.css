@@ -1,7 +1,7 @@
 .postWrapper {
     /* display: block; */
     position: relative;
-
+    margin-top: 10px;
     max-width: 900px;
     /* overflow-y: scroll; */
     display: grid;
@@ -17,6 +17,7 @@
 }
 
 .coments {
+
     grid-area: coments;
 }
 
@@ -42,9 +43,38 @@
     vertical-align: middle;
     /* display: inline-block; */
     border-bottom: 1px solid rgb(25, 25, 25);
+    display: block;
+
 
 }
+.likesCount{
+    display: inline;
+    position: relative;
+    bottom : calc(80% - 1rem);
 
+}
+.likeIcon:active{
+    transform: scale(1,1);
+    animation: pressed 0.6s forwards;
+}
+
+.deletePost{
+
+    position: relative;
+    transform: scale(1,1);
+    animation: pressed 0.6s forwards;
+ }
+ @keyframes like {
+    0%{
+        transform: scale(0.8,0.8);
+    }
+    50%{
+        transform: scale(1.2,1.2);
+    }
+    100%{
+        transform: scale(1,1);
+    }
+}
 .controls span {
     line-height: 2.2rem;
     height: 2rem;
@@ -69,9 +99,10 @@
 
 .postIMG {
     width: 100%;
-    height: auto;
+    height: 100%;
     max-width: 590px;
     max-height: 590px;
+    object-fit: cover;
 
 }
 
@@ -103,7 +134,7 @@ span {
     display: inline;
     font-size: large;
     text-decoration: none;
-    /* grid-area: Name; */
+
     text-decoration: none;
     color: black;
     font-weight: 400;
@@ -121,7 +152,7 @@ span {
     .postWrapper {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.6fr 5fr 0.4fr 0.7fr auto;
+        grid-template-rows: 0.6fr 4.9fr 0.4fr 0.7fr auto;
         grid-template-areas:
             "User"
             "IMG"
@@ -131,7 +162,8 @@ span {
     }
 
     .deletePost img {
-        position: fixed;
-        right: 2rem;
+    
+        position: absolute;
+        left: 80%;
     }
 }

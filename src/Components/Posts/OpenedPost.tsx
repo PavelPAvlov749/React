@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Global_state_type } from "../../Redux/Store";
 
-import { deletePostThunk, getSinglePostByID, likeToogleThunk, postActions } from "../../Redux/PostReducer";
+import { deletePostThunk, getComents, getSinglePostByID, likeToogleThunk, postActions } from "../../Redux/PostReducer";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 //COMPONENTS
 import { PostComents, SilngleComent } from "./Coments";
@@ -18,7 +18,7 @@ import crossIcon from "../../Media/trash_64.png"
 import comentIcon from "../../Media/comentIcon.png"
 import { Preloader } from "../Preloader/Preloader";
 import { Firestore_instance } from "../../DAL/Firestore_config";
-import { StringFormat } from "firebase/storage";
+
 import { ComentType } from "../../Redux/Types";
 
 
@@ -31,8 +31,7 @@ export const ShowedPost: React.FC = React.memo((props) => {
     let location = useLocation().pathname.split("=")[1]
     useEffect(() => {
         dispatch(getSinglePostByID(location))
-        Firestore_instance.getPostSinglePostByPostID("VIXtmwcLqlQgoOZf2zJf")
-        Firestore_instance.getComents("fnoa3ivqyuMJnY50T4Zt")
+        dispatch(getComents(location))
     }, [])
     const actualUserPage = useSelector((state: Global_state_type) => {
         return state.userPage
@@ -40,15 +39,18 @@ export const ShowedPost: React.FC = React.memo((props) => {
     const actualPost = useSelector((state: Global_state_type) => {
         return state.userPosts.currentPost
     })
-    
-    let coments = Object.values(actualPost.coments)
-
+    const coments = useSelector((state : Global_state_type) => {
+        return state.userPosts.coments
+    })
+    console.log(coments)
     const tapLikeHandler = () => {
        
         dispatch(likeToogleThunk(actualPost.id as string, currentUserID as string))
         if (actualPost.likesCount?.includes(currentUserID as string)) {
+            console.log("CONTAINS")
             dispatch(postActions.dislike(currentUserID as string))
         } else {
+            console.log("NOT CONTAINS")
             dispatch(postActions.likeToogle(currentUserID as string))
 
         }
@@ -78,7 +80,7 @@ export const ShowedPost: React.FC = React.memo((props) => {
                     <img className={styles.postIMG} src={actualPost.postIMG} alt="" />
                 </div>
                 <section className={styles.controls}>
-                <img src={actualPost.likesCount.includes(currentUserID as string) ? dislikeIMG : likeImg} alt="#" className={styles.likeIcon} onClick={tapLikeHandler} />
+                <img src={!actualPost.likesCount.includes(currentUserID as string) ? dislikeIMG : likeImg} alt="#" className={styles.likeIcon} onClick={tapLikeHandler} />
                     <img src={comentIcon} alt="#" className={styles.comentIcon} onClick={onComentClickHandler}></img>
                    
                     <span className={styles.likesCount} onClick={onComentClickHandler}>{actualPost.likesCount?.length + "\t likes"}</span>
@@ -87,17 +89,16 @@ export const ShowedPost: React.FC = React.memo((props) => {
 
               
                 <section className={styles.coments}>
-                    {actualPost.coments.length > 0 ? actualPost.coments.map((coment : ComentType) => {
+                    {coments.length > 0 ? coments.map((coment : ComentType) => {
                         return (
                             <>
-                                {/* <SilngleComent coment={coment} currentUserID={currentUserID as string}/>                             */}
+                            
+                                <SilngleComent coment={coment} currentUserID={currentUserID as string}/>                            
                             </>
                         )
                     }) : <h1>There are no Coments</h1>}
                 </section>
-                {/* {actualPost.coments.length > 0 ? <SilngleComent coment={actualPost?.coments[actualPost.coments.length - 1]} currentUserID={currentUserID as string}/> : 
-                "There is no coments"}
-                <h2 onClick={onComentClickHandler} className={styles.showAll}>Show all Coments</h2> */}
+        
             </section>
         )
     } else {

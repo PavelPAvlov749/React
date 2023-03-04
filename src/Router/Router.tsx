@@ -13,6 +13,7 @@ import React from "react"
 import { AllComents } from "../Components/Posts/AllComents"
 import { AllPosts } from "../Components/News/News"
 import { UsersList } from "../Components/UsersList/usersList"
+import { ErrorBoundary } from "../ErrorBoundary/ErrorBoundary"
 
 const LOGIN = "/login"
 const CHAT = "/chat"
@@ -32,7 +33,7 @@ const FOLLOWERS = "/profile/:id/Followers"
 const FOLOOWED = "/profile/:id/Followed"
 
 export const Router :React.FC<{actualUser : string,isAuth : boolean,}> = (props : {actualUser : string,isAuth : boolean,}) => {
-
+    const errorBoundary = new ErrorBoundary(props)
     if(props.isAuth){
         return (
             <div className={styles.router}>
@@ -40,7 +41,10 @@ export const Router :React.FC<{actualUser : string,isAuth : boolean,}> = (props 
                     <Route path={LOGIN} element={<Navigate to={USER_PROFILE + "=" + props.actualUser}/>}/>
                     <Route path={ROOT} element={null}/>
                     <Route path={USER_PROFILE} element={<UserPage/>}/>
-                    <Route path={POST} element={<ShowedPost/>}/>
+                    <Route path={POST} element={
+                    <ErrorBoundary>
+                        <ShowedPost/>
+                        </ErrorBoundary>}/>
                     <Route path={SEARCH} element={<UserSearch/>}/>
                     <Route path={CHAT} element={<Chat/>}/>
                     <Route path={DIRECT} element={<Dirrect/>}/>

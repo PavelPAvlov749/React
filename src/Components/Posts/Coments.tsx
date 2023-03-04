@@ -7,6 +7,7 @@ import { ComentType } from "../../Redux/Types";
 import styles from "../../Styles/OpenPost.module.css"
 import { Avatar } from "../UserPage/Avatar";
 import crossIcon from "../../Media/close.png"
+import style from "../../Styles/SingleComent.module.css"
 
 
 export const SilngleComent: React.FC<{coment : ComentType,currentUserID : string}> = React.memo((props) => {
@@ -15,18 +16,17 @@ export const SilngleComent: React.FC<{coment : ComentType,currentUserID : string
     const onDeleteHandler = () => {
         dispatch(deleteComentThunk(location,props.coment?.comentID as string))
     }
-
+    console.log(props.coment.avatar)
     return (
-        <div key={props.coment?.comentID} className={styles.singleComentWrapper}>
-           
+        <div key={props.coment?.comentID} className={style.singleComentWrapper}>
+        
+           <img className={style.avatar} src={props.coment.avatar as string}></img>
             <span>{props.coment?.comentatorName + "\t:\t"}</span>
-            <figure className={styles.closeWrapper}>
-            {props.coment?.comentatorID === props.currentUserID ?  <img className={styles.deleteComent} src={crossIcon} alt="#" onClick={onDeleteHandler}></img> : null}
-            </figure>
-
             <br />
-            <span className={styles.comentText}>{props.coment?.coment_text}</span>
+            <span className={style.comentText}>{props.coment?.coment_text}</span>
             <br />
+            {props.coment?.comentatorID === props.currentUserID ? 
+             <span className={style.deleteComent} onClick={onDeleteHandler}>Delete coment</span> : null}
         </div>
 
     )
@@ -35,7 +35,7 @@ export const SilngleComent: React.FC<{coment : ComentType,currentUserID : string
 export const PostComents: React.FC<{coments : Array<ComentType>}> = React.memo((props) => {
     
     const coments = useSelector((state : Global_state_type) => {
-        return state.userPosts.currentPost.coments
+        return state.userPosts.coments
     })
     const postID = useSelector((state:Global_state_type) => {
         return state.userPosts.currentPost.id

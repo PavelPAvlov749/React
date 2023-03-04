@@ -1,0 +1,29 @@
+.singleComentWrapper{
+    line-height: 2rem;
+    vertical-align: middle;
+    width: calc(100% - 10px);
+    background-color: rgb(220, 220, 220);
+    display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.avatar{
+    width: 40px;
+    border-radius: 180px;
+    vertical-align: middle;
+    margin-right: 1rem;
+    height: 40px;
+    display: inline;
+}
+.singleComentWrapper span{
+    line-height: 1rem;
+    /* font-size: large; */
+    vertical-align: middle;
+  
+}
+.deleteComent {
+    margin-left: 1rem;
+    font-weight: 500;
+    color: rgb(63, 63, 63);
+}

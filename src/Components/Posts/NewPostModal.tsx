@@ -84,23 +84,10 @@ export const NewPostModalWindow: React.FC = React.memo((props) => {
     }
     //SUNBIMT HANDLER 
     const formSubmit = (values: PostFormType) => {
-        //  dispatch(postActions.setNewPosttext(values.post_text))
-        // const newPost: PostType = {
-        //     post_img: newPostIMG,
-        //     post_text: newPostText,
-        //     creator: currendUser.fullName as string,
-        //     likes_count: [] as Array<string>,
-        //     coments: [] as Array<ComentType>,
-        //     creatorID: currendUser.userID as string,
-        //     creatorAvatar: currendUser.avatar as string
-        // }
-        dispatch(createNewPostThunk(currendUser.userID as string, values.file, values.post_text,
+
+        dispatch(createNewPostThunk(currendUser.avatar,currendUser.userID as string, values.file, values.post_text,
              values.post_tag, currendUser.fullName as string, currendUser.userID as string))
-        // dispatch(createNewPostThunk(currendUser.userID as string, values.file, values.post_text,
-        //     values.post_tag, currendUser.fullName as string, currendUser.userID as string))
-        // dispatch(postActions.setIsOnnewPost(false))
-        // FSAPI.addPost(currendUser.userID as string,values.post_text,values.post_img)
-        // Firestore_instance.addPost(currendUser.fullName as string,currendUser.userID as string,values.post_text,values.file)
+    
         navigate(`/profile/id=${currendUser.userID}`)
     }
     const NextStepHandler = () => {

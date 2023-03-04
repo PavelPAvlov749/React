@@ -1,11 +1,11 @@
-.newPostContainer{
+.newPostContainer {
 
     text-align: center;
     width: 100%;
     max-width: 900px;
     align-items: center;
     justify-content: center;
-  
+
 }
 
 .newPostModal {
@@ -34,14 +34,15 @@
 }
 
 .step2 {
-    transform: translateY(-150%);
+    position: relative;
+    transform: translateX(-150%);
     animation: step2 1s forwards;
 
 }
 
 @keyframes step2 {
     0% {
-        transform: translateY(-150%);
+        transform: translatex(-150%);
     }
 
     100% {
@@ -70,15 +71,18 @@
 .disableNext {
     display: none;
 }
-.step2 input{
+
+.step2 input {
     width: 40%;
     -webkit-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
 }
-.step2 input:focus{
+
+.step2 input:focus {
     outline-width: 0;
     width: 70%;
 }
+
 .imgIcon {
     vertical-align: middle;
     margin-top: calc(30vh - 100px);
@@ -89,15 +93,17 @@
 
 .newPostIMG {
     object-fit: cover;
-    margin: 0%;
+    margin-bottom: 2rem;
     padding: 0%;
     display: inline-block;
     max-height: 400px;
+    max-width: 100%;
+
 }
 
-.publish {
+.newPostContainer button {
 
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
 
     border: none;
     height: 2rem;
@@ -106,6 +112,7 @@
     color: white;
     background-color: rgb(31, 62, 147);
 }
+
 
 .stepBack {
     margin-top: 5rem;
@@ -120,7 +127,8 @@
 .publish:disabled {
     background-color: rgb(76, 85, 109);
 }
-.cancelNewPost{
+
+.cancelNewPost {
     margin-top: 1rem;
     display: inline;
     border: none;
@@ -130,30 +138,32 @@
     color: white;
     background-color: rgb(31, 62, 147);
 }
-.cancelNewPost:active{
+
+.cancelNewPost:active {
     background-color: rgb(16, 31, 72);
     height: 2rem + 2px;
 }
 
-@media(max-width : 550px){
-    .newPostContainer{
+@media(max-width : 550px) {
+    .newPostContainer {
         height: calc(100% - 2rem);
     }
-    .Next{
-        position: fixed;
-        bottom: calc(2rem + 2rem + 10px);
-        left: 4%;
+
+    .Next {
+        position:fixed;
+        bottom: 2.2rem;
+        left: 25%;
         margin-top: 1rem;
         display: inline;
         border: none;
         height: 2rem;
-        width: 90%;
+        
         border-radius: 5px;
         color: white;
         background-color: rgb(31, 62, 147);
-        overflow-x: hidden;
     }
-    .newPostModal{
+
+    .newPostModal {
         width: 100%;
         padding: 0px;
         border: none;
@@ -164,30 +174,33 @@
         height: 100%;
 
     }
+
     @keyframes transform {
-        0%{
+        0% {
             transform: translateX(+100%);
 
         }
-        100%{
+
+        100% {
             transform: translateX(0%);
         }
     }
-    .cancelNewPost{
-        position: fixed;
-        bottom: 2rem;
-        left: 4%;
-        margin-top: 1rem;
-        display: inline;
-        border: none;
-        height: 2rem;
-        width: 90%;
-        border-radius: 5px;
-        color: white;
-        background-color: rgb(31, 62, 147);
-        overflow-x: hidden;
-    }
-    .newPostIMG{
+
+   .cancelNewPost{
+    position:fixed;
+    bottom: 0;
+    left: 25%;
+    margin-top: 1rem;
+    display: inline;
+    border: none;
+    height: 2rem;
+    width: 70%;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(31, 62, 147);
+   }
+
+    .newPostIMG {
         object-fit: cover;
         margin: 0%;
         padding: 0%;

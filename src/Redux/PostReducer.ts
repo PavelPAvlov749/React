@@ -22,6 +22,7 @@ const SET_ON_NEW_POST = "insta-clone/postReducer/setIsOnNewPost"
 const SET_NEW_POST_PHOTO = "insta-clone/postReducer/setNewPostPhoto"
 const SET_NEW_POST_TEXT = "insta-clone/postReducer/setNewPostText"
 const CREATE_POST = "insta-clone/postReducer/createPost"
+const GET_COMENTS = "insta-clone/postReducer/getComents"
 
 
 type ActionType = InferActionType<typeof postActions>
@@ -33,6 +34,7 @@ export let initial_state = {
     posts: [] as unknown as Array<PostType>,
     newPost: null as unknown as PostType,
     currentPost: null as unknown as PostType,
+    coments : []  as Array<ComentType>,
     isOnNewPost: false,
     newPostPhoto: null as unknown as string,
     newPostText: "",
@@ -45,6 +47,12 @@ export const PostsReducer = (state = initial_state, action: ActionType) => {
             return {
                 ...state,
                 posts: action.payload
+            }
+        }
+        case GET_COMENTS : {
+            return {
+                ...state,
+                coments : action.payload
             }
         }
         case CREATE_POST: {
@@ -62,7 +70,7 @@ export const PostsReducer = (state = initial_state, action: ActionType) => {
         case LIKE: {
             return {
                 ...state,
-                currentPost: { ...state.currentPost, likes_count: state.currentPost.likesCount.concat(action.payload) }
+                currentPost: { ...state.currentPost, likesCount: state.currentPost.likesCount.concat(action.payload) }
 
             }
 
@@ -71,7 +79,7 @@ export const PostsReducer = (state = initial_state, action: ActionType) => {
         case DISLIKE: {
             return {
                 ...state,
-                currentPost: { ...state.currentPost, likes_count: state.currentPost.likesCount.filter(el => el !== action.payload) }
+                currentPost: { ...state.currentPost, likesCount: state.currentPost.likesCount.filter(el => el !== action.payload) }
             }
         }
         case SET_ON_NEW_POST: {
@@ -118,17 +126,7 @@ export const postActions = {
     } as const),
     set_showed_post: (_post: PostType) => ({
         type: "messenger/posts_reducer/set_showed_post",
-        payload: {
-            postText: _post.postText,
-            postIMG: _post.postIMG,
-            id: _post.id,
-            likesCount: Object.hasOwn(_post, "likes_count") ? Object.values(_post.likesCount) : [] as Array<string>,
-            creator: _post.creator,
-            createdAt: _post.createdAt,
-            coments: Object.hasOwn(_post, "coments") ? Object.values(_post.coments) : [] as Array<ComentType>,
-            creatorID: _post.creatorID,
-            creatorAvatar: _post.creatorAvatar
-        }
+        payload: _post
     } as const),
     setIsPostFetch: (isFetch: boolean) => ({
         type: "messenger/posts_reducer/isPostFetch",
@@ -169,6 +167,10 @@ export const postActions = {
     createPost: (post: PostType) => ({
         type: "insta-clone/postReducer/createPost",
         payload: post
+    } as const),
+    getComents : (comenets : ComentType[]) => ({
+        type : "insta-clone/postReducer/getComents",
+        payload : comenets
     } as const)
 }
 
@@ -176,7 +178,7 @@ export const getPostListByUserID = (userID: string) => {
     return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
         const posts = await Firestore_instance.getPostsByUserID(userID)
-        console.log(posts)
+    
 
         dispatch(postActions.getPosts(Object.values(posts)))
         dispatch(app_actions.set_is_fetch_fasle())
@@ -188,11 +190,13 @@ export const leaveComentThunk = (userID: string, postID: string, coment: ComentT
     return async function (dispatch: any) {
         try {
             dispatch(app_actions.set_is_fetch_true())
-            const newComent = await postAPI.addComentToPost(userID, postID, coment.coment_text as string, coment.comentatorName as string, coment.avatar as string)
-            if (newComent) {
-                dispatch(postActions.addComent(postID, newComent))
+            // const newComent = await postAPI.addComentToPost(userID, postID, coment.coment_text as string, coment.comentatorName as string, coment.avatar as string)
+            const newComent = await Firestore_instance.addComentToPost(coment.avatar as string,postID,coment.comentatorName as string,
+                userID,coment.coment_text as string)
+        
+                dispatch(postActions.addComent(postID, coment))
                 dispatch(app_actions.set_is_fetch_fasle())
-            }
+            
 
         } catch (ex) {
             console.error(ex)
@@ -202,13 +206,15 @@ export const leaveComentThunk = (userID: string, postID: string, coment: ComentT
 export const getSinglePostByID = (postID: string) => {
     return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())
-        let post = await postAPI.getPostByID(postID)
-        dispatch(postActions.set_showed_post(post))
+        // let post = await postAPI.getPostByID(postID)
+        let post = await Firestore_instance.getPostSinglePostByPostID(postID)
+      
+        dispatch(postActions.set_showed_post(post as unknown as PostType))
 
         dispatch(app_actions.set_is_fetch_fasle())
     }
 }
-export const createNewPostThunk = (userID: string, postIMG: Blob | Uint8Array | ArrayBuffer, postText: string, postTags: string, userFullNAme: string,
+export const createNewPostThunk = (userAvatar : string,userID: string, postIMG: Blob | Uint8Array | ArrayBuffer, postText: string, postTags: string, userFullNAme: string,
     creatorID: string) => {
     return async function (dispatch: any) {
         try {
@@ -216,9 +222,10 @@ export const createNewPostThunk = (userID: string, postIMG: Blob | Uint8Array | 
             if (postIMG !== null && postIMG !== undefined) {
 
                 dispatch(app_actions.setOnLoad(true))
-                const newPostKey = await Firestore_instance.addPost(userFullNAme as string,userID,postText,postIMG)
+                const newPostKey = await Firestore_instance.addPost(userFullNAme as string,userID,postText,postIMG,userAvatar)
                 if (newPostKey) {
                     dispatch(app_actions.set_is_fetch_fasle())
+                    dispatch(postActions.setNewPostPhoto(null))
                     dispatch(app_actions.setOnLoad(false))
                 }
 
@@ -265,7 +272,12 @@ export const likeToogleThunk = (postID: string, currentUserID: string) => {
 
     }
 }
-
+export const getComents = (postID : string) => {
+    return async function (dispatch : any) {
+        const coments = await Firestore_instance.getComents(postID)
+        dispatch(postActions.getComents(coments))
+    }
+}
 export const getAllPosts = () => {
     return async function (dispatch: any) {
         dispatch(app_actions.set_is_fetch_true())

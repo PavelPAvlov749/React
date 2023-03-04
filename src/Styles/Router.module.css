@@ -2,7 +2,7 @@
     max-width: 900px;
     width: 100%;
     height: calc(93% - 1rem);
-    margin-top: 1rem;
+
     position:fixed;
     overflow-y: scroll;
 

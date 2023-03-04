@@ -10,6 +10,7 @@ import { getDownloadURL, getStorage, ref as storegeRef, StorageReference } from 
 import { firebase, Firestore } from "./FirebaseConfig";
 import { uploadBytes } from "firebase/storage";
 import { makeid } from "./Randomizer";
+import { ComentType, PostType } from "../Redux/Types";
 
 
 
@@ -48,7 +49,7 @@ export const Firestore_instance = {
         try {
             const docRef = doc(Firestore, "Posts/" + postID)
             const post = await getDoc(docRef)
-            console.log(post.data())
+           
             return post.data()
         } catch (ex) {
             console.log(ex)
@@ -64,14 +65,14 @@ export const Firestore_instance = {
                 posts.push(doc.data())
 
             })
-            console.log(posts)
+           
             return posts
         } catch (ex) {
             console.log(ex)
         }
 
     },
-    addPost: async (userName: string, userID: string, text: string, img: Blob | ArrayBuffer | Uint8Array) => {
+    addPost: async (userName: string, userID: string, text: string, img: Blob | ArrayBuffer | Uint8Array,userAvatar : string) => {
         try {
             const imageID: string = makeid(12);
             const docRef = await collection(Firestore, "Posts")
@@ -80,15 +81,19 @@ export const Firestore_instance = {
             const imageRef: StorageReference = storegeRef(storageRefrence, imageID)
             await uploadBytes(imageRef, img)
             const imgURL = await getDownloadURL(imageRef)
-            await setDoc(docID, {
-                postIMG: imgURL,
-                likesCount: [],
-                postText: text,
-                creatorName: userName,
-                creatorID: userID,
-                createdAt: serverTimestamp(),
-                id: docID.id
-            })
+            const newPost : PostType = {
+                postIMG : imgURL,
+                likesCount : [],
+                creator : userName,
+                creatorID : userID,
+                postText : text,
+                id : docID.id,
+                createdAt : Timestamp.fromDate(new Date()).toDate().toString(),
+                coments : [],
+                creatorAvatar : userAvatar
+
+            }
+            await setDoc(docID, newPost)
        
             return docID.id
         } catch (ex) {
@@ -125,15 +130,16 @@ export const Firestore_instance = {
             console.log(ex)
         }
     },
-    addComentToPost: async (postID: string, comentatorName: string, comentatorID: string, commentText: string) => {
+    addComentToPost: async (avatar : string,postID: string, comentatorName: string, comentatorID: string, commentText: string) => {
         try {
             const docRef = collection(Firestore, "Coments/")
             const comentID = doc(docRef)
-            const newComent = {
+            const newComent : ComentType = {
                 comentatorName: comentatorName,
                 comentatorID: comentatorID,
-                commentText: commentText,
-                createdAt: serverTimestamp(),
+                coment_text: commentText,
+                avatar : avatar,
+                createdAt: Timestamp.fromDate(new Date()).toDate().toString(),
                 comentID: comentID.id,
                 postID: postID
             }

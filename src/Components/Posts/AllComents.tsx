@@ -12,37 +12,29 @@ import comentIcon from "../../Media/comentIcon.png"
 
 
 export const AllComents : React.FC = React.memo((props) => {
-    const navigate = useNavigate()
-    const location = useLocation()
+
     const currentUserID = useSelector((state:Global_state_type) => {
         return state.account.userID
     })
     const postComents = useSelector((state:Global_state_type) => {
-        return state.userPosts.currentPost.coments
+        return state.userPosts.coments
     })
-    const backArrowCloickHandler = () => {
-        const backPath = location.pathname.split("/coments")[0]
-        navigate(backPath)
-    }
+
     return (
         <section  className={styles.comentWrapper}>
-            <img className={styles.backArrow} src={backArrow} onClick={backArrowCloickHandler} alt="#"></img>
-            <span>Back to the post</span>
             <div className={styles.comentsList}>
             {postComents.length > 0 ? postComents.map((coment) => {
                 return (
-
                     <div key={coment.comentID}>
-                        <Avatar size="small" fullName={coment?.comentatorName as string} avatarIMG={coment.avatar}/>
                         <SilngleComent coment={coment} currentUserID={currentUserID as string}/>
                     </div>
                 )
             }) : <div>
-                <img className={styles.comentIcon} src={comentIcon} alt="#">
-                </img>
-                <span className={styles.noComents}>There is no coments</span></div>}
+
+                <h1 className={styles.noComents}>No coments yet</h1></div>}
             </div>
             <ComentTextArea/>
+
         </section>
     )
 })

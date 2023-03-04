@@ -1,9 +1,26 @@
 .ComentInput{
-    width: 100%;
+    width: 100%;    
+
     align-items: center;
-    position: fixed;
-    bottom: 10%;
+    position: relative;
+    bottom: 8rem;
+    height: 100%;
+    padding: 10px;
 }
+
+.comentWrapper{
+    position: relative;
+
+
+    text-align: left;
+    overflow-y: scroll;
+    height: 100%;
+
+}
+.comentWrapper::-webkit-scrollbar {
+    display: none;
+}
+
 .comentIcon{
     display: block;
     padding-bottom: 2rem;
@@ -16,17 +33,13 @@
 
 }
 
-.comentWrapper{
-    text-align: left;
-    overflow-y: scroll;
-    max-height: 500px;
-
-}
 .noComents{
-    margin-left: 25%;
+    /* margin-left: 25%; */
     text-align: center;
     width: 100%;
-    font-size: large;
+    margin-top: 50%;
+    font-size: xx-large;
+    color: rgb(87, 86, 86);
     font-weight: 500;
 }
 .backArrow{
@@ -39,20 +52,82 @@
     max-height: 30px;
     max-width: 30px;
 }
-.ComentInput input {
+.ComentInput input{
     position: fixed;
-    bottom: 12%;
+    bottom: 4rem;
     width: 100%;
-}
-.ComentInput button{
-   position: fixed;
-   bottom: 7%;
+    max-width: 870px;
     height: 2rem;
-    border-style: none;
-    color: white;
-    font-size: medium;
-    border-radius: 3px;
-    background-color: rgb(77, 90, 190);
-    text-align: center;
-    width: 100%;
+    border-radius:5px ;
+    border: 1px solid rgb(71, 71, 71);
+}
+.cancelButton{
+    position: fixed;
+    bottom: 1rem;
+    left: 53.5%;
+     height: 2rem;
+     border-style: none;
+     color: white;
+     font-size: medium;
+     border-radius: 3px;
+     background-color: rgb(77, 90, 190);
+ 
+     text-align: center;
+     width: calc(25% - 10px);
+}
+
+.publish{
+    position: fixed;
+    bottom: 1rem;
+     height: 2rem;
+     border-style: none;
+     color: white;
+     font-size: medium;
+     border-radius: 3px;
+     background-color: rgb(77, 90, 190);
+     /* background-color: red; */
+     text-align: center;
+     width: calc(25% - 5px);
+}
+@media(max-width : 550px){
+    .comentWrapper{
+        padding: 5px;
+    }
+    .cancelButton{
+        position: fixed;
+        bottom: 4rem;
+        left: 51%;
+         height: 2rem;
+         border-style: none;
+         color: white;
+         font-size: medium;
+         border-radius: 3px;
+         background-color: rgb(77, 90, 190);
+     
+         text-align: center;
+         width: calc(50% - 10px);
+    }
+    .ComentInput input {
+        position: fixed;
+        border: 1px solid rgb(44, 44, 44);
+        bottom: 7rem;
+        left: 10px;
+        height: 1.8rem;
+        width: calc(100% - 20px);
+        border-radius: 5px;
+    }
+    .publish{
+        position: fixed;
+        bottom: 4rem;
+        left: 10px;
+         height: 2rem;
+         border-style: none;
+         color: white;
+         font-size: medium;
+         border-radius: 3px;
+         background-color: rgb(77, 90, 190);
+         /* background-color: red; */
+         text-align: center;
+         width: calc(50% - 10px);
+    }
 }
