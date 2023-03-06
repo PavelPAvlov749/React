@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Global_state_type } from "../../Redux/Store";
 
-import { deletePostThunk, getComents, getSinglePostByID, likeToogleThunk, postActions } from "../../Redux/PostReducer";
+import { deletePostThunk, getSinglePostByID, likeToogleThunk, postActions } from "../../Redux/PostReducer";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 //COMPONENTS
-import { PostComents, SilngleComent } from "./Coments";
+// import { PostComents, SilngleComent } from "./Coments";
 
 //STYLES IMPORT
 import styles from "../../Styles/OpenPost.module.css"
@@ -20,6 +20,8 @@ import { Preloader } from "../Preloader/Preloader";
 import { Firestore_instance } from "../../DAL/Firestore_config";
 
 import { ComentType } from "../../Redux/Types";
+import { getComentsByPostIDThunk } from "../../Redux/ComentReducer";
+import { SilngleComent } from "./SingleComent";
 
 
 export const ShowedPost: React.FC = React.memo((props) => {
@@ -31,7 +33,7 @@ export const ShowedPost: React.FC = React.memo((props) => {
     let location = useLocation().pathname.split("=")[1]
     useEffect(() => {
         dispatch(getSinglePostByID(location))
-        dispatch(getComents(location))
+        dispatch(getComentsByPostIDThunk(location))
     }, [])
     const actualUserPage = useSelector((state: Global_state_type) => {
         return state.userPage
@@ -40,7 +42,7 @@ export const ShowedPost: React.FC = React.memo((props) => {
         return state.userPosts.currentPost
     })
     const coments = useSelector((state : Global_state_type) => {
-        return state.userPosts.coments
+        return state.coments.coments
     })
     console.log(coments)
     const tapLikeHandler = () => {

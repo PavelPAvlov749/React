@@ -10,13 +10,15 @@
 
 .comentWrapper{
     position: relative;
-
-
+    margin: 0%;
+    padding: 0%;
+    
     text-align: left;
     overflow-y: scroll;
     height: 100%;
 
 }
+
 .comentWrapper::-webkit-scrollbar {
     display: none;
 }
@@ -53,6 +55,7 @@
     max-width: 30px;
 }
 .ComentInput input{
+
     position: fixed;
     bottom: 4rem;
     width: 100%;
@@ -93,10 +96,17 @@
     .comentWrapper{
         padding: 5px;
     }
+    .comentsList{
+        position:relative;
+        height: calc(100% - 6rem);
+        border-radius: 10px;
+        width: calc(100% - 0px);
+        overflow-y: scroll;
+    }
     .cancelButton{
         position: fixed;
         bottom: 4rem;
-        left: 51%;
+        left: 50%;
          height: 2rem;
          border-style: none;
          color: white;
@@ -105,21 +115,30 @@
          background-color: rgb(77, 90, 190);
      
          text-align: center;
-         width: calc(50% - 10px);
+         width: calc(50% - 5px);
+    }
+    .ComentInput {
+        position: fixed;
+        bottom: 0;
+        height: 8rem;
+    
     }
     .ComentInput input {
-        position: fixed;
+        
+        /* display: block; */
+        
         border: 1px solid rgb(44, 44, 44);
         bottom: 7rem;
-        left: 10px;
+        left: 5px;
         height: 1.8rem;
-        width: calc(100% - 20px);
+        width: calc(100% - 15px);
         border-radius: 5px;
     }
     .publish{
-        position: fixed;
+        /* position: fixed; */
         bottom: 4rem;
-        left: 10px;
+        /* position:relative; */
+        left: 5px;
          height: 2rem;
          border-style: none;
          color: white;

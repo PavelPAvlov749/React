@@ -9,8 +9,7 @@ import { Global_state_type } from "../../Redux/Store";
 import { ComentType, PostType } from "../../Redux/Types";
 import { app_actions } from "../../Redux/AppReducer";
 import { useNavigate } from "react-router-dom";
-import { FSAPI } from "../../DAL/FirestoreAPI";
-import { Firestore_instance } from "../../DAL/Firestore_config";
+
 
 type PostFormType = {
     post_text: string,

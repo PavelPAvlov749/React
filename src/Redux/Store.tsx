@@ -7,9 +7,9 @@ import { authReducer } from "./AuthReducer";
 import { AccountReducer } from "./ProfileReducer";
 import { UsersPageReducer } from "./UserPageReducer";
 import { PostsReducer } from "./PostReducer";
-import { chatReducer } from "./ChatReducer";
 import { usersSearchReducer } from "./UserSearchReducer";
 import { RegistrationReducer } from "./RegistrationReducer";
+import { comentReducer } from "./ComentReducer";
 
 
 
@@ -20,7 +20,7 @@ let reducers = combineReducers({
     account : AccountReducer,
     userPage : UsersPageReducer,
     userPosts : PostsReducer,
-    chat : chatReducer,
+    coments : comentReducer,
     search : usersSearchReducer,
     registration : RegistrationReducer
 })

@@ -1,10 +1,8 @@
 import { Route,Routes,Navigate } from "react-router-dom"
-import { Chat, ChatDirrect } from "../Components/Chat/Chat"
-import { ChatList } from "../Components/Chat/ChatList"
-import { Dirrect } from "../Components/Chat/ChatWindow"
+
 import { Login_container } from "../Components/Login/Login"
 import { Registration } from "../Components/Login/Registartion"
-import { NewPostModalWindow } from "../Components/Posts/NewPostModal"
+import { NewPostModalWindow } from "../Components/NewPost/NewPostModal"
 import { ShowedPost } from "../Components/Posts/OpenedPost"
 import { UserPage,  } from "../Components/UserPage/UserPage"
 import { UserSearch } from "../Components/UserSearch/UserSearch"
@@ -16,7 +14,7 @@ import { UsersList } from "../Components/UsersList/usersList"
 import { ErrorBoundary } from "../ErrorBoundary/ErrorBoundary"
 
 const LOGIN = "/login"
-const CHAT = "/chat"
+
 const USERS = "/users"
 const USER_PROFILE = "/profile/:id"
 const no_match_route = "*"
@@ -46,8 +44,8 @@ export const Router :React.FC<{actualUser : string,isAuth : boolean,}> = (props 
                         <ShowedPost/>
                         </ErrorBoundary>}/>
                     <Route path={SEARCH} element={<UserSearch/>}/>
-                    <Route path={CHAT} element={<Chat/>}/>
-                    <Route path={DIRECT} element={<Dirrect/>}/>
+  
+
                     <Route path={NEW_POST} element={<NewPostModalWindow/>}/>
                     <Route path={ALL_COMENTS} element={<AllComents/>}/>
                     <Route path={News} element={<AllPosts/>}/>
