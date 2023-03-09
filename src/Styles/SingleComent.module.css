@@ -10,6 +10,30 @@
     transform: scale(0.5,0.5);
     animation: coment 0.2s forwards;
 }
+.singleComentDelete{
+    line-height: 2rem;
+    vertical-align: middle;
+    width: calc(100% - 5px);
+    background-color: rgb(220, 220, 220);
+    display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: 5px;
+
+  
+}
+.singleComentDelete span:active{
+    transform: translateX(100%);
+    animation: delete 0.2s forwards;
+}
+@keyframes delete{
+    0%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(100%);
+    }
+}
 @keyframes coment{
     0%{
         transform: scale(0.2,0.2);

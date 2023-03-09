@@ -100,6 +100,7 @@ export const deleteComent = (comentID : string) => {
     return async function (dispatch : any) {
         dispatch(app_actions.set_is_fetch_true())
         Firestore_instance.deleteComentByID(comentID)
+        dispatch(comentActions.deleteComent(comentID))
         dispatch(app_actions.set_is_fetch_fasle())
     }
 }

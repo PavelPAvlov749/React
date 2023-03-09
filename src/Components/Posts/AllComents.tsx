@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik, FormikHandlers } from "formik";
 import { ComentType } from "../../Redux/Types";
 import styles from "../../Styles/Coments.module.css"
@@ -14,6 +14,9 @@ import { addComentThunk, comentActions } from "../../Redux/ComentReducer";
 
 
 export const AllComents : React.FC = React.memo((props) => {
+    //Local state for autoscroll to new coment by click on bublish 
+    const [autoscroll,setAutoscrol] = useState(false)
+    
     const navigate = useNavigate()
     const location = useLocation()
     const dispatch : any = useDispatch()
@@ -30,7 +33,7 @@ export const AllComents : React.FC = React.memo((props) => {
         const backPath = location.pathname.split("/coments")[0]
         navigate(backPath)
     }
-    console.log(location.pathname.split("/")[2].split("=")[1])
+
     const onSubmitHandler = ( values : {coment : string}) => {
         const newComent : ComentType = {
             avatar : currentUser.avatar,
@@ -41,6 +44,7 @@ export const AllComents : React.FC = React.memo((props) => {
         dispatch(addComentThunk(newComent,location.pathname.split("/")[2].split("=")[1]))
         dispatch(comentActions.setNewComentText(""))
     }
+    //onChange input handler 
     const dispatchNewPostText = (e : any) => {
         console.log("DISPATCHED : " + newComentText)
         dispatch(comentActions.setNewComentText(e.currentTarget.value))
@@ -51,7 +55,7 @@ export const AllComents : React.FC = React.memo((props) => {
             {postComents.length > 0 ? postComents.map((coment) => {
                 return (
                     <div key={coment.comentID}>
-                        <SilngleComent coment={coment} currentUserID={currentUser.userID as string}/>
+                        <SilngleComent key={coment.comentID} coment={coment} currentUserID={currentUser.userID as string}/>
                     </div>
                 )
             }) : <div>
@@ -63,7 +67,6 @@ export const AllComents : React.FC = React.memo((props) => {
                         <Form>
                             <Field onKeyUp={dispatchNewPostText} name="coment"  type="text" autocomplete="off"></Field>
                             <br />
-                          
                             <button className={style.cancelButton} onClick={backArrowCloickHandler}>Back</button>
                             <button className={style.publish} type="submit">Publish</button>
                         </Form>

@@ -32,7 +32,7 @@ export const AllPosts: React.FC = React.memo((props) => {
 
                 {posts.length ? posts.map((post) => {
                     return (
-                        <div className={styles.postIMGContainer}>
+                        <div key={post.id} className={styles.postIMGContainer}>
                         <NavLink to={"/p/id=" + post.id}>
                         <img src={post.postIMG} alt="" />
                         </NavLink>

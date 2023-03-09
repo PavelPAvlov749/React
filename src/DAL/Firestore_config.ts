@@ -39,7 +39,7 @@ export const Firestore_instance = {
             } else {
                 throw new Error("Cant load posts")
             }
-            console.log(posts)
+
             return posts
         } catch (ex) {
             console.log(ex)
@@ -171,7 +171,7 @@ export const Firestore_instance = {
             } else {
                 console.log("Empty")
             }
-            console.log(coments)
+
             return coments
         } catch (ex) {
             console.log(ex)

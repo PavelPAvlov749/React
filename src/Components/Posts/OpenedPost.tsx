@@ -17,7 +17,7 @@ import { Avatar } from "../UserPage/Avatar";
 import crossIcon from "../../Media/trash_64.png"
 import comentIcon from "../../Media/comentIcon.png"
 import { Preloader } from "../Preloader/Preloader";
-import { Firestore_instance } from "../../DAL/Firestore_config";
+import saveToTheGalery from "../../Media/bookmark.png"
 
 import { ComentType } from "../../Redux/Types";
 import { getComentsByPostIDThunk } from "../../Redux/ComentReducer";
@@ -41,12 +41,12 @@ export const ShowedPost: React.FC = React.memo((props) => {
     const actualPost = useSelector((state: Global_state_type) => {
         return state.userPosts.currentPost
     })
-    const coments = useSelector((state : Global_state_type) => {
+    const coments = useSelector((state: Global_state_type) => {
         return state.coments.coments
     })
-    console.log(coments)
+
     const tapLikeHandler = () => {
-       
+
         dispatch(likeToogleThunk(actualPost.id as string, currentUserID as string))
         if (actualPost.likesCount?.includes(currentUserID as string)) {
             console.log("CONTAINS")
@@ -62,17 +62,17 @@ export const ShowedPost: React.FC = React.memo((props) => {
         navigate("coments")
     }
     const deletePostHandler = () => {
-        dispatch(deletePostThunk(currentUserID as string,actualPost.id as string))
+        dispatch(deletePostThunk(currentUserID as string, actualPost.id as string))
         navigate(`/profile/id=${currentUserID}`)
     }
     if (actualPost) {
         return (
             <section className={styles.postWrapper}>
                 <div className={styles.creatorInfo}>
-                <NavLink to={`/profile/id:=${actualPost.creatorID}`} >
-                    <Avatar avatarIMG={actualUserPage.avatar} fullName={actualUserPage.fullName} size="small" />
-                    <h1 className={styles.autorName}>{actualPost?.creator}</h1>
-                </NavLink>
+                    <NavLink to={`/profile/id:=${actualPost.creatorID}`} >
+                        <Avatar avatarIMG={actualUserPage.avatar} fullName={actualUserPage.fullName} size="small" />
+                        <h1 className={styles.autorName}>{actualPost?.creator}</h1>
+                    </NavLink>
                 </div>
                 <div className={styles.postInfo}>
                     <span className={styles.name}>{actualPost.creator + "\t:\t"}</span>
@@ -82,31 +82,32 @@ export const ShowedPost: React.FC = React.memo((props) => {
                     <img className={styles.postIMG} src={actualPost.postIMG} alt="" />
                 </div>
                 <section className={styles.controls}>
-                <img src={!actualPost.likesCount.includes(currentUserID as string) ? dislikeIMG : likeImg} alt="#" className={styles.likeIcon} onClick={tapLikeHandler} />
+                    <img src={!actualPost.likesCount.includes(currentUserID as string) ? dislikeIMG : likeImg} alt="#" className={styles.likeIcon} onClick={tapLikeHandler} />
                     <img src={comentIcon} alt="#" className={styles.comentIcon} onClick={onComentClickHandler}></img>
-                   
+
                     <span className={styles.likesCount} onClick={onComentClickHandler}>{actualPost.likesCount?.length + "\t likes"}</span>
-                    {currentUserID === actualPost.creatorID ?  <img src={crossIcon} alt="#" className={styles.deletePost} onClick={deletePostHandler}></img> : null }
+                    {currentUserID === actualPost.creatorID ? <img src={crossIcon} alt="#" className={styles.deletePost} onClick={deletePostHandler}></img> : null}
+                    <figure className={styles.saveToTheGaleryButton}>
+                        <img src={saveToTheGalery}></img>
+                    </figure>
                 </section>
 
-              
+
+
                 <section className={styles.coments}>
-                    {coments.length > 0 ? coments.map((coment : ComentType) => {
+                    {coments.length > 0 ? coments.map((coment: ComentType) => {
                         return (
-                            <>
-                            
-                                <SilngleComent coment={coment} currentUserID={currentUserID as string}/>                            
-                            </>
+                            <SilngleComent key={coment.comentID} coment={coment} currentUserID={currentUserID as string} />
                         )
                     }) : <h1>There are no Coments</h1>}
                 </section>
-        
+
             </section>
         )
     } else {
         return (
             <>
-                <Preloader/>
+                <Preloader />
             </>
 
         )

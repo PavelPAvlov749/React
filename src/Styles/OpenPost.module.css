@@ -1,9 +1,7 @@
 .postWrapper {
-    /* display: block; */
     position: relative;
     margin-top: 10px;
     max-width: 900px;
-    /* overflow-y: scroll; */
     display: grid;
     grid-template-columns: 6fr 4fr;
     grid-template-rows: 0.5fr 1fr 4fr 1fr;
@@ -17,7 +15,6 @@
 }
 
 .coments {
-
     grid-area: coments;
 }
 
@@ -30,22 +27,16 @@
 
 .postIMGContainer {
     grid-area: IMG;
-
-
 }
 
 .controls {
     grid-area: controls;
-    /* display:  table-row; */
     padding: 5px;
     height: 2.2rem;
     line-height: 2.2rem;
     vertical-align: middle;
-    /* display: inline-block; */
     border-bottom: 1px solid rgb(25, 25, 25);
     display: block;
-
-
 }
 .likesCount{
     display: inline;
@@ -81,8 +72,6 @@
     align-items: center;
     display: inline;
     vertical-align: middle;
-    /* background-color: red; */
-
 }
 
 .deletePost img {
@@ -151,6 +140,7 @@ span {
 @media (max-width : 550px) {
     .postWrapper {
         display: grid;
+        grid-gap : 1px;
         grid-template-columns: 1fr;
         grid-template-rows: 0.6fr 4.9fr 0.4fr 0.7fr auto;
         grid-template-areas:
@@ -160,9 +150,42 @@ span {
             "postInfo"
             "coments";
     }
+    .saveToTheGaleryButton {
+        /* display: inline; */
+        grid-area: save;
+        width: 40px;
+        height: 40px;
+        margin: 0%;
+        padding: 0%;
+    }
+    .controls {
+        padding: 5px 15px 5px 5px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 6fr 1fr 1fr;
+        grid-template-rows: 2rem;
+        grid-template-areas: 
+        "like coment count remove save";
+    }
+    .deletePost{
+        grid-area: remove;
+    }
+    .likeIcon{
+        grid-area: like;
+       
 
-    .deletePost img {
+    }
+    .comentIcon{
+        grid-area: coment;
+    }
+    .likesCount{
+        grid-area: count;
+        bottom : 0%;
+        position: inherit;
+        display: grid;
+    }
     
+    .deletePost img {
+        
         position: absolute;
         left: 80%;
     }
